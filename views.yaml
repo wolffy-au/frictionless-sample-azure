@@ -65,6 +65,30 @@
   no_direction: [Flow, Triggering]
   max_width: 3800
 
+- id: view-sample-azure-everything
+  name: "Everything: sample-azure"
+  # Deliberately viewpoint: custom — this spans all three layers (Business,
+  # Application, Technology), which no standard viewpoint allows. Swept by
+  # include_types (every element type actually used in this model), not
+  # members, so a newly added element of any of these types appears here
+  # automatically.
+  viewpoint: custom
+  diagram: overview
+  include_types:
+    - BusinessActor
+    - BusinessProcess
+    - BusinessInterface
+    - ApplicationComponent
+    - ApplicationInterface
+    - ApplicationProcess
+    - DataObject
+    - Node
+    - SystemSoftware
+    - TechnologyInterface
+    - CommunicationNetwork
+    - Artifact
+  max_width: 3800
+
 - id: view-sample-azure-application
   name: "Application Cooperation"
   viewpoint: application_cooperation

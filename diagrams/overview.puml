@@ -1,0 +1,50 @@
+@startuml
+!include <archimate/Archimate>
+
+scale max 3800 width
+title Everything: sample-azure
+
+Technology_Node(e_id3db5d26be8ff56, "Static Web App") {
+  Technology_Artifact(e_id1ee4629338065d, "Database Config")
+  Technology_Interface(e_id33cc192ee35e5b, "Web App Interface")
+  Technology_SystemSoftware(e_id3b81282895f35e, "Azure Static Web App Software")
+}
+Technology_Node(e_idd447595fb73a5f, "Azure SQL Server") {
+  Technology_Artifact(e_idf0ecd6fb3b8b5b, "appdb")
+  Technology_Interface(e_id76a7034dd9ab53, "SQL Server Interface")
+  Technology_SystemSoftware(e_id30920e0c9a155d, "Azure SQL Server Software")
+}
+Technology_CommunicationNetwork(e_id5deb57760c7b5f, "No-VNet Azure Network")
+Technology_CommunicationNetwork(e_id454e7b903b8357, "Internet")
+Application_Component(e_idb9118a54ded651, "Items API") {
+  Application_Interface(e_id27cc7f94392754, "/api/items Interface")
+  Application_Process(e_id9e4601a2031c58, "Initialize Demo Data")
+  Application_Process(e_idf9a91550500455, "Read Demo Items")
+}
+Application_Component(e_id859316e8097157, "Frontend") {
+  Application_Interface(e_idd8a8c6ca248e52, "Frontend Interface")
+}
+Application_DataObject(e_id032efff5924e5e, "DemoItems")
+Business_Actor(e_id40e6f8deb4f45c, "Visitor") {
+  Business_Process(e_ida6f500d9395851, "View Demo Items")
+}
+Business_Interface(e_id66a63993dfde51, "Website")
+
+Rel_Realization_Up(e_idf0ecd6fb3b8b5b, e_id032efff5924e5e, "")
+Rel_Association(e_id1ee4629338065d, e_idb9118a54ded651, "SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD app settings")
+Rel_Association(e_id3db5d26be8ff56, e_id5deb57760c7b5f, "")
+Rel_Realization_Up(e_id3db5d26be8ff56, e_id859316e8097157, "hosts")
+Rel_Realization_Up(e_id3db5d26be8ff56, e_idb9118a54ded651, "hosts")
+Rel_Serving_Up(e_id27cc7f94392754, e_id859316e8097157, "GET /api/items")
+Rel_Triggering_Right(e_id9e4601a2031c58, e_idf9a91550500455, "")
+Rel_Access_w(e_id9e4601a2031c58, e_id032efff5924e5e, "create/seed")
+Rel_Access_r(e_idf9a91550500455, e_id032efff5924e5e, "select")
+Rel_Serving_Up(e_id66a63993dfde51, e_id40e6f8deb4f45c, "provides access for")
+Rel_Realization_Up(e_id859316e8097157, e_id66a63993dfde51, "")
+Rel_Realization_Up(e_idf9a91550500455, e_ida6f500d9395851, "")
+Rel_Serving_Up(e_idd8a8c6ca248e52, e_id66a63993dfde51, "provides access for")
+Rel_Association(e_id454e7b903b8357, e_id33cc192ee35e5b, "")
+Rel_Association(e_id5deb57760c7b5f, e_id76a7034dd9ab53, "")
+Rel_Access(e_id3b81282895f35e, e_id1ee4629338065d, "")
+
+@enduml
