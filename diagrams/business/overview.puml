@@ -1,0 +1,13 @@
+@startuml
+!include <archimate/Archimate>
+
+title Business: sample-azure Visitor Journey
+
+Business_Actor(e_id40e6f8deb4f45c, "Visitor") {
+  Business_Process(e_ida6f500d9395851, "View Demo Items")
+}
+Business_Interface(e_id66a63993dfde51, "Website")
+
+Rel_Serving_Up(e_id66a63993dfde51, e_id40e6f8deb4f45c, "provides access for")
+
+@enduml

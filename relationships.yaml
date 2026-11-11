@@ -53,3 +53,11 @@
   label: select
   props:
     access_type: Read
+
+# --- Business: Visitor viewing the demo items (uml/behavior/8-use-case.puml) ---
+- {type: Assignment, source: biz-visitor, target: biz-view-demo-items}
+- {type: Serving, source: biz-website, target: biz-visitor, label: "provides access for"}
+- {type: Realization, source: app-frontend, target: biz-website}
+- {type: Realization, source: app-read-demo-items, target: biz-view-demo-items}
+- {type: Composition, source: app-frontend, target: int-frontend, label: exposes}
+- {type: Serving, source: int-frontend, target: biz-website, label: provides access for}

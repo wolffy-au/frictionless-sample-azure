@@ -20,8 +20,53 @@
     - TechnologyEvent
     - Artifact
 
+- id: view-sample-azure-business
+  name: "Business: sample-azure Visitor Journey"
+  viewpoint: custom
+  diagram: business/overview
+  include_types:
+    - BusinessActor
+    - BusinessRole
+    - BusinessCollaboration
+    - BusinessInterface
+    - BusinessProcess
+    - BusinessFunction
+    - BusinessInteraction
+    - BusinessEvent
+    - BusinessService
+    - BusinessObject
+
+- id: view-sample-azure-process-cooperation
+  name: Business Process Cooperation
+  viewpoint: business_process_cooperation
+  diagram: business/process-cooperation
+  include_types:
+    - BusinessActor
+    - BusinessRole
+    - BusinessCollaboration
+    - Location
+    - BusinessInterface
+    - BusinessProcess
+    - BusinessFunction
+    - BusinessInteraction
+    - BusinessEvent
+    - BusinessService
+    - BusinessObject
+    - Representation
+    - ApplicationComponent
+    - ApplicationCollaboration
+    - ApplicationInterface
+    - ApplicationProcess
+    - ApplicationFunction
+    - ApplicationInteraction
+    - ApplicationEvent
+    - ApplicationService
+    - DataObject
+  no_direction: [Flow, Triggering]
+  max_width: 3800
+
 - id: view-sample-azure-application
-  name: "Application: sample-azure Cooperation"
+  name: "Application Cooperation"
   viewpoint: application_cooperation
   diagram: application/cooperation-standard
   include_types:
