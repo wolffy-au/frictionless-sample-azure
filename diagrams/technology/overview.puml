@@ -14,9 +14,11 @@ Technology_Node(e_idd447595fb73a5f, "Azure SQL Server") {
   Technology_SystemSoftware(e_id30920e0c9a155d, "Azure SQL Server Software")
 }
 Technology_CommunicationNetwork(e_id5deb57760c7b5f, "No-VNet Azure Network")
+Technology_CommunicationNetwork(e_id454e7b903b8357, "Internet")
 
-Rel_Access_w(e_idd447595fb73a5f, e_id1ee4629338065d, "provides FQDN for SQL_SERVER")
 Rel_Association(e_id3db5d26be8ff56, e_id5deb57760c7b5f, "")
-Rel_Association(e_idd447595fb73a5f, e_id5deb57760c7b5f, "")
+Rel_Association(e_id454e7b903b8357, e_id33cc192ee35e5b, "")
+Rel_Association(e_id5deb57760c7b5f, e_id76a7034dd9ab53, "")
+Rel_Access(e_id3b81282895f35e, e_id1ee4629338065d, "")
 
 @enduml

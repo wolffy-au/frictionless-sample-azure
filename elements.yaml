@@ -47,17 +47,27 @@
   id: comm-no-vnet-azure-network
   name: No-VNet Azure Network
   desc: >-
-    Neither side has VNet integration or Private Link: the Static Web App
-    (Visitor HTTPS ingress via the Web App Interface, and egress to SQL — no
-    VNet option on Free tier) and the SQL Server's public endpoint
-    (publicNetworkAccess: Enabled) share this unisolated network plane. Not
-    the open internet: SQL access is additionally gated by the
-    AllowAzureServices firewall rule, which admits any Azure tenant's
+    Neither side has VNet integration or Private Link, so the Static Web
+    App's egress to SQL (no VNet option on Free tier) and the SQL Server's
+    public endpoint (publicNetworkAccess: Enabled) share this unisolated
+    network plane. Not the open internet: access is additionally gated by
+    the AllowAzureServices firewall rule, which admits any Azure tenant's
     services, not arbitrary internet hosts.
   props:
     public-network-access: Enabled
     firewall-rule: "AllowAzureServices (0.0.0.0-0.0.0.0)"
     min-tls-version: "1.2"
+
+- type: CommunicationNetwork
+  id: comm-internet
+  name: Internet
+  desc: >-
+    The genuinely open internet: unlike the no-VNet Azure network above,
+    there's no firewall rule or Azure-tenant scoping here — any browser,
+    anywhere, can reach the Static Web App's public HTTPS endpoint (Free
+    tier has no private-endpoint option). This is the Visitor's ingress
+    path, and the Static Web App's only direct egress/ingress boundary to
+    the public internet as opposed to Azure's own network.
 
 # =====================================================================
 # Application — the Functions API and the data it reads/writes

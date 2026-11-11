@@ -15,18 +15,10 @@
 
 - {type: Assignment, source: node-static-web-app, target: artifact-static-site-appsettings, label: hosts}
 
-- type: Access
-  source: node-sql-server
-  target: artifact-static-site-appsettings
-  label: "provides FQDN for SQL_SERVER"
-  props:
-    access_type: Write
-
 - {type: Association, source: artifact-static-site-appsettings, target: app-items-api, label: "SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD app settings"}
 
 # --- Technology: no VNet/private endpoint on either side (main.bicep) ---
 - {type: Association, source: node-static-web-app, target: comm-no-vnet-azure-network}
-- {type: Association, source: node-sql-server, target: comm-no-vnet-azure-network}
 
 # --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
 
@@ -71,3 +63,10 @@
 - {type: Realization, source: app-read-demo-items, target: biz-view-demo-items}
 - {type: Composition, source: app-frontend, target: int-frontend, label: exposes}
 - {type: Serving, source: int-frontend, target: biz-website, label: provides access for}
+
+# --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
+- {type: Association, source: comm-internet, target: int-web-app}
+- {type: Association, source: comm-no-vnet-azure-network, target: int-sql-server}
+
+# --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
+- {type: Access, source: sys-azure-static-site, target: artifact-static-site-appsettings}
