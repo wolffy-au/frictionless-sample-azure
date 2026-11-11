@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+ENV_FILE="$(dirname "$0")/.env"
+if [[ -f "$ENV_FILE" ]]; then
+  set -a
+  # shellcheck source=/dev/null
+  source "$ENV_FILE"
+  set +a
+fi
+
 RESOURCE_GROUP="${RESOURCE_GROUP:-MyRG-centralus}"
 LOCATION="${LOCATION:-centralus}"
 
