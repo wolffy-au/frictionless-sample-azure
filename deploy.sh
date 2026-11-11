@@ -60,7 +60,7 @@ echo "Deploying the frontend and API..."
 npm --prefix api exec -- swa deploy ./public \
   --api-location ./api \
   --api-language node \
-  --api-version 20 \
+  --api-version 24 \
   --deployment-token "$SWA_CLI_DEPLOYMENT_TOKEN" \
   --app-name "$STATIC_WEB_APP_NAME" \
   --resource-group "$RESOURCE_GROUP" \
