@@ -3,15 +3,19 @@
   "private": true,
   "main": "dist/functions/*.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@azure/functions": "^4.7.2",
     "mssql": "^11.0.1"
   },
   "devDependencies": {
+    "@azure/static-web-apps-cli": "2.1.0",
     "@types/mssql": "^9.1.7",
     "@types/node": "^22.15.30",
+    "patch-package": "^8.0.0",
+    "punycode": "^2.3.1",
     "typescript": "^5.8.3"
   }
 }

@@ -1,0 +1,9 @@
+diff --git a/node_modules/is-valid-domain/index.js b/node_modules/is-valid-domain/index.js
+--- a/node_modules/is-valid-domain/index.js
++++ b/node_modules/is-valid-domain/index.js
+@@ -1,4 +1,4 @@
+-const punycode = require('punycode')
++const punycode = require('punycode/')
+ const sldMap = require('./data/sldMap.json')
+ const ccTldMap = require('./data/ccTldMap.json')
+ 
