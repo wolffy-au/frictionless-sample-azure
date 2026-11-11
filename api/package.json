@@ -1,0 +1,17 @@
+{
+  "name": "static-web-app-demo-api",
+  "private": true,
+  "main": "dist/functions/*.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.7.2",
+    "mssql": "^11.0.1"
+  },
+  "devDependencies": {
+    "@types/mssql": "^9.1.7",
+    "@types/node": "^22.15.30",
+    "typescript": "^5.8.3"
+  }
+}

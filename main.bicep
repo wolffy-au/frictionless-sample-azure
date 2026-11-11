@@ -60,9 +60,13 @@ resource staticSiteAppSettings 'Microsoft.Web/staticSites/config@2022-09-01' = {
   name: 'appsettings'
   kind: 'string'
   properties: {
-    DATABASE_URL: 'Server=tcp:${sqlServer.properties.fullyQualifiedDomainName},1433;Initial Catalog=${dbName};Persist Security Info=False;User ID=${dbAdminUsername};Password=${dbAdminPassword};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;'
+    SQL_SERVER: sqlServer.properties.fullyQualifiedDomainName
+    SQL_DATABASE: dbName
+    SQL_USER: dbAdminUsername
+    SQL_PASSWORD: dbAdminPassword
   }
 }
 
+output staticWebAppName string = staticSite.name
 output sqlServerName string = sqlServer.name
 output sqlDatabaseName string = sqlDatabase.name
