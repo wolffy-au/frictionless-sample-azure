@@ -1,7 +1,7 @@
 @startuml
 !include <archimate/Archimate>
 
-title Technology: sample-azure Infrastructure
+title Technology
 
 Technology_Node(e_id3db5d26be8ff56, "Static Web App") {
   Technology_Interface(e_id33cc192ee35e5b, "Web App Interface")
