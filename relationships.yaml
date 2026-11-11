@@ -14,13 +14,6 @@
   target: app-items-api
   label: "SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD app settings"
 
-- type: Access
-  source: app-items-api
-  target: do-demo-items
-  label: read/write
-  props:
-    access_type: ReadWrite
-
 - type: Realization
   source: artifact-sql-appdb
   target: do-demo-items
@@ -36,3 +29,27 @@
 # --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
 - {type: Assignment, source: node-sql-server, target: sys-azure-sql-server}
 - {type: Assignment, source: node-static-web-app, target: sys-azure-static-site}
+
+# --- Application: frontend, API process split (uml/structure, uml/behavior) ---
+- {type: Realization, source: node-static-web-app, target: app-frontend, label: hosts}
+- {type: Realization, source: node-static-web-app, target: app-items-api, label: hosts}
+- {type: Composition, source: app-items-api, target: int-items-api, label: exposes}
+- {type: Serving, source: int-items-api, target: app-frontend, label: "GET /api/items"}
+
+- {type: Assignment, source: app-items-api, target: app-init-demo-data}
+- {type: Assignment, source: app-items-api, target: app-read-demo-items}
+- {type: Triggering, source: app-init-demo-data, target: app-read-demo-items}
+
+- type: Access
+  source: app-init-demo-data
+  target: do-demo-items
+  label: create/seed
+  props:
+    access_type: Write
+
+- type: Access
+  source: app-read-demo-items
+  target: do-demo-items
+  label: select
+  props:
+    access_type: Read

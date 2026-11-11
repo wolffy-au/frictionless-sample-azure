@@ -50,6 +50,30 @@
     calls /api/items; on first request it creates dbo.DemoItems and inserts
     three sample rows if the table is empty.
 
+- type: ApplicationComponent
+  id: app-frontend
+  name: Frontend
+  desc: >-
+    Static browser app (public/index.html, public/app.js). Calls GET /api/items
+    on page load and renders the returned DemoItem rows.
+
+- type: ApplicationInterface
+  id: int-items-api
+  name: "/api/items Interface"
+  desc: HTTP interface exposed by the Items API component for the frontend to call.
+
+- type: ApplicationProcess
+  id: app-init-demo-data
+  name: Initialize Demo Data
+  desc: >-
+    First-request setup inside getItems(): sp_getapplock, CREATE TABLE
+    dbo.DemoItems if missing, INSERT 3 seed rows if empty.
+
+- type: ApplicationProcess
+  id: app-read-demo-items
+  name: Read Demo Items
+  desc: "SELECT Id, Name, Category FROM dbo.DemoItems ORDER BY Id, run every request after initialization."
+
 - type: DataObject
   id: do-demo-items
   name: DemoItems

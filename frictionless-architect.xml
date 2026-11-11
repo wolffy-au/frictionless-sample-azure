@@ -52,6 +52,42 @@
         </property>
       </properties>
     </element>
+    <element identifier="id-859316e8097157ce823a81f45e5be19b" xsi:type="ApplicationComponent">
+      <name>Frontend</name>
+      <documentation>Static browser app (public/index.html, public/app.js). Calls GET /api/items on page load and renders the returned DemoItem rows.</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-27cc7f943927547f96ea28fdf6f271ed" xsi:type="ApplicationInterface">
+      <name>/api/items Interface</name>
+      <documentation>HTTP interface exposed by the Items API component for the frontend to call.</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-9e4601a2031c58ac9b6893c386b72342" xsi:type="ApplicationProcess">
+      <name>Initialize Demo Data</name>
+      <documentation>First-request setup inside getItems(): sp_getapplock, CREATE TABLE dbo.DemoItems if missing, INSERT 3 seed rows if empty.</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-f9a915505004556f83d517e573efdf8e" xsi:type="ApplicationProcess">
+      <name>Read Demo Items</name>
+      <documentation>SELECT Id, Name, Category FROM dbo.DemoItems ORDER BY Id, run every request after initialization.</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
     <element identifier="id-032efff5924e5ef3b57593ad5595b7df" xsi:type="DataObject">
       <name>DemoItems</name>
       <documentation>dbo.DemoItems table — created and seeded by the Items API on first request.</documentation>
@@ -105,19 +141,41 @@
     <relationship identifier="id-bf0e00095d165d9ea7f45d5396abf2b9" source="id-d447595fb73a5ff29894857ab28f8ffe" target="id-b9118a54ded651d7b8872524243f8f51" xsi:type="Serving">
       <name>SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD app settings</name>
     </relationship>
-    <relationship identifier="id-8ca3e7ec2f6553ff94d398b3affa9ff0" source="id-b9118a54ded651d7b8872524243f8f51" target="id-032efff5924e5ef3b57593ad5595b7df" xsi:type="Access" accessType="ReadWrite">
-      <name>read/write</name>
-    </relationship>
     <relationship identifier="id-db7b0346a7d05b0aa26ffaf1a80287b6" source="id-f0ecd6fb3b8b5bb69f24b39169314ce4" target="id-032efff5924e5ef3b57593ad5595b7df" xsi:type="Realization"/>
     <relationship identifier="id-7db6279a41b05e31a85d5a89667bb388" source="id-d447595fb73a5ff29894857ab28f8ffe" target="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Assignment"/>
     <relationship identifier="id-47eb0f8f822a505ea723fcd975e6fa4a" source="id-3db5d26be8ff5636bce7ce69f352db3c" target="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Assignment"/>
     <relationship identifier="id-51e5662bb2e6573b9f4e2f5000fba6ae" source="id-d447595fb73a5ff29894857ab28f8ffe" target="id-30920e0c9a155dedb6c97d07fefde16e" xsi:type="Assignment"/>
     <relationship identifier="id-2f40959555f8561d87c981226a1ac1cc" source="id-3db5d26be8ff5636bce7ce69f352db3c" target="id-3b81282895f35e30a238f6ed3dfeee13" xsi:type="Assignment"/>
+    <relationship identifier="id-46b4c52b6d2f5da8a3b9d788e0076909" source="id-3db5d26be8ff5636bce7ce69f352db3c" target="id-859316e8097157ce823a81f45e5be19b" xsi:type="Realization">
+      <name>hosts</name>
+    </relationship>
+    <relationship identifier="id-d162cc61bcca5333843e3ab2394f09aa" source="id-3db5d26be8ff5636bce7ce69f352db3c" target="id-b9118a54ded651d7b8872524243f8f51" xsi:type="Realization">
+      <name>hosts</name>
+    </relationship>
+    <relationship identifier="id-cb4370f388f75aa29537395b7f15bcaa" source="id-b9118a54ded651d7b8872524243f8f51" target="id-27cc7f943927547f96ea28fdf6f271ed" xsi:type="Composition">
+      <name>exposes</name>
+    </relationship>
+    <relationship identifier="id-80d162e47b7b5328aae91cec9b287ad9" source="id-27cc7f943927547f96ea28fdf6f271ed" target="id-859316e8097157ce823a81f45e5be19b" xsi:type="Serving">
+      <name>GET /api/items</name>
+    </relationship>
+    <relationship identifier="id-e56af0bed81b5664a2acdb2e85610df1" source="id-b9118a54ded651d7b8872524243f8f51" target="id-9e4601a2031c58ac9b6893c386b72342" xsi:type="Assignment"/>
+    <relationship identifier="id-aad93d9f823352d89adc4808b026a47c" source="id-b9118a54ded651d7b8872524243f8f51" target="id-f9a915505004556f83d517e573efdf8e" xsi:type="Assignment"/>
+    <relationship identifier="id-9c22d45ca1545ff682c2544909ef8a82" source="id-9e4601a2031c58ac9b6893c386b72342" target="id-f9a915505004556f83d517e573efdf8e" xsi:type="Triggering"/>
+    <relationship identifier="id-9b1b35ea797a5cb8b3bfb0a66fb66b67" source="id-9e4601a2031c58ac9b6893c386b72342" target="id-032efff5924e5ef3b57593ad5595b7df" xsi:type="Access" accessType="Write">
+      <name>create/seed</name>
+    </relationship>
+    <relationship identifier="id-eebf010d830959c3ae5ce9cf9d5cdfd2" source="id-f9a915505004556f83d517e573efdf8e" target="id-032efff5924e5ef3b57593ad5595b7df" xsi:type="Access" accessType="Read">
+      <name>select</name>
+    </relationship>
   </relationships>
   <organizations>
     <item>
       <label>Application</label>
       <item identifierRef="id-b9118a54ded651d7b8872524243f8f51"/>
+      <item identifierRef="id-859316e8097157ce823a81f45e5be19b"/>
+      <item identifierRef="id-27cc7f943927547f96ea28fdf6f271ed"/>
+      <item identifierRef="id-9e4601a2031c58ac9b6893c386b72342"/>
+      <item identifierRef="id-f9a915505004556f83d517e573efdf8e"/>
       <item identifierRef="id-032efff5924e5ef3b57593ad5595b7df"/>
     </item>
     <item>
@@ -246,14 +304,84 @@
             </font>
           </style>
         </node>
-        <node identifier="id-bbc40a6213e156ff86ee861fb547dcf0" elementRef="id-032efff5924e5ef3b57593ad5595b7df" xsi:type="Element" x="240" y="0" w="80" h="80">
+        <node identifier="id-89ba4430a30056be9ed06b5c0ff83893" elementRef="id-859316e8097157ce823a81f45e5be19b" xsi:type="Element" x="240" y="0" w="100" h="80">
           <style>
             <font name="Arial" size="10">
               <color r="0" g="0" b="0"/>
             </font>
           </style>
         </node>
-        <connection identifier="id-1909be23e142587489510eadfd1a2d11" relationshipRef="id-8ca3e7ec2f6553ff94d398b3affa9ff0" xsi:type="Relationship" source="id-0b649a33e0ad5583baa78e1a76ff15ae" target="id-bbc40a6213e156ff86ee861fb547dcf0">
+        <node identifier="id-eb5affd58fb951719df9118e5322efc3" elementRef="id-27cc7f943927547f96ea28fdf6f271ed" xsi:type="Element" x="480" y="0" w="100" h="70">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-ade8fed4c095556f8b2a2a898f7b1bdd" elementRef="id-9e4601a2031c58ac9b6893c386b72342" xsi:type="Element" x="720" y="0" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-24a07e0c1983579596bfd9c36af6173f" elementRef="id-f9a915505004556f83d517e573efdf8e" xsi:type="Element" x="960" y="0" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-bbc40a6213e156ff86ee861fb547dcf0" elementRef="id-032efff5924e5ef3b57593ad5595b7df" xsi:type="Element" x="1200" y="0" w="80" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <connection identifier="id-eb026848a18f5f1197a6f5a025dbdc4a" relationshipRef="id-cb4370f388f75aa29537395b7f15bcaa" xsi:type="Relationship" source="id-0b649a33e0ad5583baa78e1a76ff15ae" target="id-eb5affd58fb951719df9118e5322efc3">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-3e385f5e78b558f8b2e09d46e162bd8b" relationshipRef="id-80d162e47b7b5328aae91cec9b287ad9" xsi:type="Relationship" source="id-eb5affd58fb951719df9118e5322efc3" target="id-89ba4430a30056be9ed06b5c0ff83893">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-9766c5b340345c9c9a2c77f4a2983d9f" relationshipRef="id-e56af0bed81b5664a2acdb2e85610df1" xsi:type="Relationship" source="id-0b649a33e0ad5583baa78e1a76ff15ae" target="id-ade8fed4c095556f8b2a2a898f7b1bdd">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-9fa120b966005d1baf70f0e26f4d3d91" relationshipRef="id-aad93d9f823352d89adc4808b026a47c" xsi:type="Relationship" source="id-0b649a33e0ad5583baa78e1a76ff15ae" target="id-24a07e0c1983579596bfd9c36af6173f">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-50d831051c575d67ac348675b35e9bd4" relationshipRef="id-9c22d45ca1545ff682c2544909ef8a82" xsi:type="Relationship" source="id-ade8fed4c095556f8b2a2a898f7b1bdd" target="id-24a07e0c1983579596bfd9c36af6173f">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-d978b7c497b45778a76725db851aed46" relationshipRef="id-9b1b35ea797a5cb8b3bfb0a66fb66b67" xsi:type="Relationship" source="id-ade8fed4c095556f8b2a2a898f7b1bdd" target="id-bbc40a6213e156ff86ee861fb547dcf0">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-5e8abda377d655b1b50b1691d184a177" relationshipRef="id-eebf010d830959c3ae5ce9cf9d5cdfd2" xsi:type="Relationship" source="id-24a07e0c1983579596bfd9c36af6173f" target="id-bbc40a6213e156ff86ee861fb547dcf0">
           <style lineWidth="1">
             <font name="Segoe UI" size="9">
               <color r="0" g="0" b="0"/>

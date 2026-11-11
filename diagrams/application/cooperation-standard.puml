@@ -4,9 +4,17 @@
 scale max 3800 width
 title Application: sample-azure Cooperation
 
-Application_Component(e_idb9118a54ded651, "Items API")
+Application_Component(e_idb9118a54ded651, "Items API") {
+  Application_Interface(e_id27cc7f94392754, "/api/items Interface")
+  Application_Process(e_id9e4601a2031c58, "Initialize Demo Data")
+  Application_Process(e_idf9a91550500455, "Read Demo Items")
+}
+Application_Component(e_id859316e8097157, "Frontend")
 Application_DataObject(e_id032efff5924e5e, "DemoItems")
 
-Rel_Access_rw(e_idb9118a54ded651, e_id032efff5924e5e, "read/write")
+Rel_Serving_Up(e_id27cc7f94392754, e_id859316e8097157, "GET /api/items")
+Rel_Triggering_Right(e_id9e4601a2031c58, e_idf9a91550500455, "")
+Rel_Access_w(e_id9e4601a2031c58, e_id032efff5924e5e, "create/seed")
+Rel_Access_r(e_idf9a91550500455, e_id032efff5924e5e, "select")
 
 @enduml
