@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A small Azure Static Web Apps and Azure SQL demo.">
+    <title>SQL inventory demo</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: system-ui, sans-serif;
+        color: #172033;
+        background: #f3f6fb;
+      }
+
+      body {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 3rem 1.25rem;
+      }
+
+      h1 {
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        color: #526078;
+      }
+
+      table {
+        width: 100%;
+        margin-top: 1.5rem;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        box-shadow: 0 0.5rem 1.5rem #17203312;
+      }
+
+      th,
+      td {
+        padding: 0.9rem 1rem;
+        border-bottom: 1px solid #e6eaf1;
+        text-align: left;
+      }
+
+      th {
+        background: #eaf0fa;
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      #status {
+        min-height: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>SQL inventory demo</h1>
+      <p>Three sample rows loaded from Azure SQL through a server-side TypeScript API.</p>
+      <p id="status" role="status">Loading items…</p>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+          </tr>
+        </thead>
+        <tbody id="items"></tbody>
+      </table>
+    </main>
+    <script src="app.js" defer></script>
+  </body>
+</html>
