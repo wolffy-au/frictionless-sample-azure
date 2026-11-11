@@ -1,0 +1,38 @@
+@startuml
+title Timing: connection-pool caching across invocations
+
+robust "Connection Pool\n(poolPromise)" as Pool
+robust "Request Handler\n(handleItems)" as Handler
+
+Pool has Uninitialized,Connecting,Connected
+Handler has Idle,Handling,Responded
+
+@0
+Pool is Uninitialized
+Handler is Idle
+
+@10
+Handler is Handling
+Pool is Connecting
+Handler -> Handler : Request 1 (cold start):\ngetPool() creates ConnectionPool
+
+@60
+Pool is Connected
+
+@70
+Handler is Responded
+
+@100
+Handler is Idle
+
+@120
+Handler is Handling
+Handler -> Handler : Request 2 (warm):\npoolPromise already cached
+
+@125
+Handler is Responded
+
+@150
+Handler is Idle
+
+@enduml

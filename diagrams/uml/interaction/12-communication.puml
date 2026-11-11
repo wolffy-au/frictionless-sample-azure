@@ -1,0 +1,17 @@
+@startuml
+title Communication: GET /api/items (message flow)
+
+object "Browser\n(app.js: loadItems())" as Browser
+object "Items API\n(handleItems())" as ItemsAPI
+object "getItems()" as GetItems
+object "getPool()" as GetPool
+object "Azure SQL\n(appdb)" as Sql
+
+Browser --> ItemsAPI : 1: GET /api/items
+ItemsAPI --> GetItems : 1.1: getItems()
+GetItems --> GetPool : 1.1.1: getPool()
+GetPool --> Sql : 1.1.1.1: connect()\n[poolPromise undefined]
+GetItems --> Sql : 1.1.2: batch(lock, create, seed, select)
+ItemsAPI --> Browser : 2: 200 OK, jsonBody: DemoItem[]\n(or 500 on error, items.ts:95-100)
+
+@enduml

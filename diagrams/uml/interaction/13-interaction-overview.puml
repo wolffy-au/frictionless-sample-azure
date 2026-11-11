@@ -1,0 +1,19 @@
+@startuml
+title Interaction overview: GET /api/items request handling
+
+start
+:ref: Browser sends GET /api/items\n(see 11-sequence.puml);
+if (Connection pool cached?\n(poolPromise already set)) then (no)
+  :ref: Establish SQL connection pool\n(getPool() -> new ConnectionPool().connect());
+else (yes)
+endif
+:ref: Execute getItems() SQL batch\n(see 9-activity.puml: lock, create, seed, select);
+if (Exception thrown?) then (yes)
+  :ref: Return 500 error response\n(context.error + jsonBody.error);
+  stop
+else (no)
+  :ref: Return 200 JSON response\n(jsonBody: DemoItem[]);
+  stop
+endif
+
+@enduml

@@ -1,0 +1,45 @@
+@startuml
+title Sequence: GET /api/items
+
+actor Browser as Browser
+participant "handleItems()" as Handler
+participant "getItems()" as GetItems
+participant "getPool()" as GetPool
+database "Azure SQL\n(appdb)" as Sql
+
+Browser -> Handler : GET /api/items
+activate Handler
+
+Handler -> GetItems : await getItems()
+activate GetItems
+
+GetItems -> GetPool : await getPool()
+activate GetPool
+
+alt poolPromise undefined (cold start)
+  GetPool -> Sql : new ConnectionPool(...).connect()
+  Sql --> GetPool : connected pool
+else poolPromise cached
+  GetPool -> GetPool : return cached poolPromise
+end
+GetPool --> GetItems : pool
+deactivate GetPool
+
+GetItems -> Sql : pool.request().batch(\n  sp_getapplock, CREATE TABLE IF missing,\n  INSERT seed IF empty, SELECT ORDER BY Id)
+activate Sql
+
+alt lock/DDL/select succeed
+  Sql --> GetItems : recordset (DemoItem[])
+  GetItems --> Handler : DemoItem[]
+  Handler --> Browser : 200, jsonBody: DemoItem[]
+else exception thrown
+  Sql --> GetItems : throw (lock timeout / SQL error)
+  GetItems --> Handler : rejected promise
+  Handler -> Handler : context.error(\n  "Unable to load demo items...")
+  Handler --> Browser : 500,\njsonBody: {error: "Unable to load demo items.\nCheck the API logs for details."}
+end
+deactivate Sql
+deactivate GetItems
+deactivate Handler
+
+@enduml
