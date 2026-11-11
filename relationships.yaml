@@ -18,7 +18,8 @@
 - {type: Association, source: artifact-static-site-appsettings, target: app-items-api, label: "SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD app settings"}
 
 # --- Technology: no VNet/private endpoint on either side (main.bicep) ---
-- {type: Association, source: node-static-web-app, target: comm-no-vnet-azure-network}
+# (Static Web App side attaches at sys-mssql-driver below, once that element exists —
+# matching int-sql-server's interface-level grain on the other side, not the Node's.)
 
 # --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
 
@@ -31,6 +32,8 @@
 # --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
 - {type: Assignment, source: node-sql-server, target: sys-azure-sql-server}
 - {type: Assignment, source: node-static-web-app, target: sys-azure-static-site}
+- {type: Serving, source: sys-azure-sql-server, target: app-items-api, label: "executes queries"}
+- {type: Serving, source: sys-azure-static-site, target: app-frontend, label: "serves static files"}
 
 # --- Application: frontend, API process split (uml/structure, uml/behavior) ---
 - {type: Realization, source: node-static-web-app, target: app-frontend, label: hosts}
@@ -69,11 +72,24 @@
 - {type: Association, source: comm-no-vnet-azure-network, target: int-sql-server}
 
 # --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
-- {type: Access, source: sys-azure-static-site, target: artifact-static-site-appsettings}
+- type: Access
+  source: sys-azure-static-site
+  target: artifact-static-site-appsettings
+  label: "provisions app settings"
+  props:
+    access_type: Write
 
 # --- Technology: runtime stack behind the Items API only, not the Frontend (api/package.json) ---
 - {type: Assignment, source: node-static-web-app, target: sys-nodejs-runtime, label: hosts}
 - {type: Serving, source: sys-nodejs-runtime, target: app-items-api, label: executes}
 - {type: Assignment, source: node-static-web-app, target: sys-mssql-driver, label: hosts}
 - {type: Serving, source: sys-mssql-driver, target: app-items-api, label: "provides SQL connectivity"}
-- {type: Serving, source: int-sql-server, target: sys-mssql-driver, label: TDS}
+- {type: Serving, source: int-sql-server, target: sys-mssql-driver, label: "TDS (Tabular Data Stream protocol)"}
+- {type: Association, source: sys-mssql-driver, target: comm-no-vnet-azure-network}
+
+- type: Access
+  source: sys-mssql-driver
+  target: artifact-static-site-appsettings
+  label: "reads SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD"
+  props:
+    access_type: Read

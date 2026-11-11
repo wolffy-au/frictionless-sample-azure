@@ -24,7 +24,9 @@
 - type: Node
   id: node-sql-server
   name: Azure SQL Server
-  desc: Logical SQL server for the sample app's database.
+  desc: >-
+    Azure SQL Server (Microsoft.Sql/servers) — logical server hosting the
+    appdb database and the Database Engine that executes its queries.
 
 - type: Artifact
   id: artifact-sql-appdb
@@ -52,11 +54,9 @@
     public endpoint (publicNetworkAccess: Enabled) share this unisolated
     network plane. Not the open internet: access is additionally gated by
     the AllowAzureServices firewall rule, which admits any Azure tenant's
-    services, not arbitrary internet hosts.
-  props:
-    public-network-access: Enabled
-    firewall-rule: "AllowAzureServices (0.0.0.0-0.0.0.0)"
-    min-tls-version: "1.2"
+    services, not arbitrary internet hosts. (The specific access-control
+    values live as props on SQL Server Interface below — they're that
+    interface's gating policy, not an intrinsic property of this network.)
 
 - type: CommunicationNetwork
   id: comm-internet
@@ -110,12 +110,37 @@
   desc: dbo.DemoItems table — created and seeded by the Items API on first request.
 
 # --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
-- {type: TechnologyInterface, id: int-sql-server, name: SQL Server Interface, desc: Interface exposed by Azure SQL Server for external communication.}
+- type: TechnologyInterface
+  id: int-sql-server
+  name: SQL Server Interface
+  desc: >-
+    Interface exposed by Azure SQL Server for external communication —
+    speaks TDS (Tabular Data Stream), the wire protocol Microsoft SQL
+    Server and its client drivers (sys-mssql-driver) use to exchange
+    queries and results.
+  props:
+    public-network-access: Enabled
+    firewall-rule: "AllowAzureServices (0.0.0.0-0.0.0.0)"
+    min-tls-version: "1.2"
+
 - {type: TechnologyInterface, id: int-web-app, name: Web App Interface, desc: Interface exposed by the Static Web App for external communication.}
 
 # --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
-- {type: SystemSoftware, id: sys-azure-sql-server, name: Azure SQL Server Software, desc: System software representing the Azure SQL Server (Microsoft.Sql/servers).}
-- {type: SystemSoftware, id: sys-azure-static-site, name: Azure Static Web App Software, desc: System software representing the Azure Static Web App (Microsoft.Web/staticSites).}
+- type: SystemSoftware
+  id: sys-azure-sql-server
+  name: SQL Server Database Engine
+  desc: >-
+    Database engine behind Azure SQL Server (Microsoft.Sql/servers) —
+    executes the queries app-init-demo-data/app-read-demo-items send
+    through the SQL Server Interface.
+
+- type: SystemSoftware
+  id: sys-azure-static-site
+  name: Static Web App Hosting Service
+  desc: >-
+    Azure Static Web App's own hosting service (Microsoft.Web/staticSites)
+    — serves the Frontend's static files to the browser, and manages the
+    Functions host's app settings (Database Config).
 
 - type: SystemSoftware
   id: sys-nodejs-runtime
