@@ -55,6 +55,16 @@
       #status {
         min-height: 1.5rem;
       }
+
+      footer {
+        margin-top: 2rem;
+        font-size: 0.85rem;
+        color: #7a869c;
+      }
+
+      #version {
+        font-family: ui-monospace, monospace;
+      }
     </style>
   </head>
   <body>
@@ -73,6 +83,9 @@
         <tbody id="items"></tbody>
       </table>
     </main>
+    <footer>
+      Build <span id="version">loading…</span>
+    </footer>
     <script src="app.js" defer></script>
   </body>
 </html>

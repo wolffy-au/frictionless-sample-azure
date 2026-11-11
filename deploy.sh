@@ -29,6 +29,12 @@ echo "Building the API..."
 npm --prefix api ci
 npm --prefix api run build
 
+echo "Writing build version..."
+BUILD_VERSION=$(git describe --tags --always --dirty)
+BUILD_TIME=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+printf '{\n  "version": "%s",\n  "builtAt": "%s"\n}\n' "$BUILD_VERSION" "$BUILD_TIME" > public/version.json
+echo "Build version: $BUILD_VERSION ($BUILD_TIME)"
+
 echo "Getting the Static Web App deployment token..."
 SWA_CLI_DEPLOYMENT_TOKEN=$(az staticwebapp secrets list \
   --name "$STATIC_WEB_APP_NAME" \

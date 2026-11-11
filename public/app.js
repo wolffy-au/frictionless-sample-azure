@@ -26,4 +26,22 @@ async function loadItems() {
   }
 }
 
+async function loadVersion() {
+  const versionLabel = document.querySelector("#version");
+
+  try {
+    const response = await fetch("/version.json", { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`Request failed (${response.status}).`);
+    }
+
+    const { version, builtAt } = await response.json();
+    versionLabel.textContent = `${version} · ${new Date(builtAt).toLocaleString()}`;
+    versionLabel.title = `Version ${version}, built ${builtAt}`;
+  } catch {
+    versionLabel.textContent = "development build";
+  }
+}
+
 loadItems();
+loadVersion();
