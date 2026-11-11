@@ -1,0 +1,23 @@
+@startuml
+title Composite structure: Items API component
+
+component "Items API" as ItemsAPI {
+  component "handleItems()\n(HTTP handler)" as Handler {
+    port " " as HttpPort
+  }
+  component "getItems()\n(SQL batch: lock, create, seed, select)" as GetItems
+  component "getPool()\n(cached ConnectionPool)" as Pool {
+    port " " as SqlPort
+  }
+
+  Handler --> GetItems
+  GetItems --> Pool
+}
+
+note right of Pool
+  poolPromise is a module-level cache: one
+  pooled connection reused across invocations
+  (items.ts:10-41).
+end note
+
+@enduml

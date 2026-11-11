@@ -1,0 +1,21 @@
+@startuml
+title Deployment: sample-azure infrastructure
+
+actor Browser
+
+node "Azure Static Web App\n(Free tier)" as Swa {
+  artifact "public/\n(index.html, app.js)" as FrontendArtifact
+  node "Functions API\n(Node.js 24)" as Func {
+    artifact "items.ts (compiled)" as ApiArtifact
+  }
+}
+
+node "Azure SQL Server\n(public network access: Enabled,\nmin TLS 1.2)" as SqlServer {
+  database "appdb\n(GP_S_Gen5, free limit, auto-pause)" as Appdb
+}
+
+Browser --> FrontendArtifact : HTTPS
+FrontendArtifact --> ApiArtifact : fetch /api/items
+ApiArtifact --> Appdb : TDS (mssql);\nSQL_SERVER/SQL_DATABASE/\nSQL_USER/SQL_PASSWORD app settings
+
+@enduml

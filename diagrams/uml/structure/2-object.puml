@@ -1,0 +1,26 @@
+@startuml
+title Object: seeded dbo.DemoItems rows
+
+object "item1 : DemoItem" as item1 {
+  Id = 1
+  Name = "Notebook"
+  Category = "Stationery"
+}
+object "item2 : DemoItem" as item2 {
+  Id = 2
+  Name = "Coffee mug"
+  Category = "Kitchen"
+}
+object "item3 : DemoItem" as item3 {
+  Id = 3
+  Name = "Backpack"
+  Category = "Travel"
+}
+
+note bottom
+  Hardcoded seed values inserted by getItems()
+  the first time dbo.DemoItems is found empty
+  (api/src/functions/items.ts).
+end note
+
+@enduml

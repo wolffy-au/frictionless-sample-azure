@@ -1,0 +1,20 @@
+@startuml
+title Component: sample-azure runtime components
+
+package "Azure Static Web App (Free tier)" {
+  [Frontend\n(public/index.html, app.js)] as Frontend
+  [Items API\n(api/src/functions/items.ts)] as ItemsAPI
+}
+
+database "Azure SQL Database\n(appdb, GP_S_Gen5 free limit)" as SqlDb
+
+interface "/api/items" as ItemsIface
+interface "TDS (mssql)" as SqlIface
+
+Frontend ..> ItemsIface : GET
+ItemsIface - ItemsAPI
+
+ItemsAPI ..> SqlIface : query / insert
+SqlIface - SqlDb
+
+@enduml

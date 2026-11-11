@@ -1,0 +1,19 @@
+@startuml
+title Package: sample-azure repository layout
+
+package "public" as Public {
+}
+package "api" as Api {
+  package "src.functions" as ApiFunctions {
+  }
+}
+[main.bicep] as Bicep
+[deploy.sh] as Deploy
+
+Public ..> Api : fetch("/api/items")
+Api ..> Bicep : reads SQL_SERVER / SQL_DATABASE /\nSQL_USER / SQL_PASSWORD app settings\n(provisioned by main.bicep)
+Deploy ..> Bicep : az deployment group create
+Deploy ..> Api : npm run build
+Deploy ..> Public : swa deploy ./public --api-location ./api
+
+@enduml

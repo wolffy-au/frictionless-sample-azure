@@ -1,0 +1,16 @@
+@startuml
+title Class: DemoItem (dbo.DemoItems schema)
+
+class DemoItem <<table>> {
+  +Id: int <<PK>>
+  +Name: nvarchar(100)
+  +Category: nvarchar(100)
+}
+
+note right of DemoItem
+  Schema is defined inline as CREATE TABLE DDL
+  in api/src/functions/items.ts (getItems()),
+  not tracked as a separate migration.
+end note
+
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+title Profile: Azure free-tier stereotype
+
+class Node <<metaclass>>
+class Artifact <<metaclass>>
+
+class "AzureFreeTier" as AzureFreeTier <<stereotype>> {
+  costTier: "Free" | "free-limit (auto-pause)"
+  provider: "Azure"
+}
+
+AzureFreeTier --> Node : <<Extension>>
+AzureFreeTier --> Artifact : <<Extension>>
+
+class "Static Web App" as Swa <<AzureFreeTier>>
+class "appdb" as Appdb <<AzureFreeTier>>
+
+note right of Swa
+  sku: Free (elements.yaml: node-static-web-app)
+end note
+note right of Appdb
+  sku: GP_S_Gen5, free limit, auto-pause
+  (elements.yaml: artifact-sql-appdb)
+end note
+
+@enduml
