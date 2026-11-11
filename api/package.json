@@ -2,6 +2,9 @@
   "name": "static-web-app-demo-api",
   "private": true,
   "main": "dist/functions/*.js",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "postinstall": "patch-package"
@@ -13,7 +16,7 @@
   "devDependencies": {
     "@azure/static-web-apps-cli": "2.1.0",
     "@types/mssql": "^9.1.7",
-    "@types/node": "^22.15.30",
+    "@types/node": "^24.19.2",
     "patch-package": "^8.0.0",
     "punycode": "^2.3.1",
     "typescript": "^5.8.3"
