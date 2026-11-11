@@ -37,7 +37,7 @@
 
 - type: Artifact
   id: artifact-static-site-appsettings
-  name: App Settings
+  name: Database Config
   desc: >-
     Microsoft.Web/staticSites/config "appsettings" (main.bicep
     staticSiteAppSettings) — SQL_SERVER, SQL_DATABASE, SQL_USER, SQL_PASSWORD

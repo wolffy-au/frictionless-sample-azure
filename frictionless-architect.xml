@@ -35,7 +35,7 @@
       </properties>
     </element>
     <element identifier="id-1ee4629338065d2fafc10f0f4fd6becc" xsi:type="Artifact">
-      <name>App Settings</name>
+      <name>Database Config</name>
       <documentation>Microsoft.Web/staticSites/config "appsettings" (main.bicep staticSiteAppSettings) — SQL_SERVER, SQL_DATABASE, SQL_USER, SQL_PASSWORD read by the Items API at runtime.</documentation>
       <properties>
         <property propertyDefinitionRef="propid-2">

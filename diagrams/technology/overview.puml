@@ -4,7 +4,7 @@
 title Technology
 
 Technology_Node(e_id3db5d26be8ff56, "Static Web App") {
-  Technology_Artifact(e_id1ee4629338065d, "App Settings")
+  Technology_Artifact(e_id1ee4629338065d, "Database Config")
   Technology_Interface(e_id33cc192ee35e5b, "Web App Interface")
   Technology_SystemSoftware(e_id3b81282895f35e, "Azure Static Web App Software")
 }
