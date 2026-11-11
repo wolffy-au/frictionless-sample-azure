@@ -4,6 +4,7 @@
 title Technology
 
 Technology_Node(e_id3db5d26be8ff56, "Static Web App") {
+  Technology_Artifact(e_id1ee4629338065d, "App Settings")
   Technology_Interface(e_id33cc192ee35e5b, "Web App Interface")
   Technology_SystemSoftware(e_id3b81282895f35e, "Azure Static Web App Software")
 }
@@ -13,5 +14,6 @@ Technology_Node(e_idd447595fb73a5f, "Azure SQL Server") {
   Technology_SystemSoftware(e_id30920e0c9a155d, "Azure SQL Server Software")
 }
 
+Rel_Access_w(e_idd447595fb73a5f, e_id1ee4629338065d, "provides FQDN for SQL_SERVER")
 
 @enduml

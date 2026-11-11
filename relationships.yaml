@@ -9,14 +9,20 @@
   target: artifact-sql-appdb
   label: hosts
 
-- type: Serving
-  source: node-sql-server
-  target: app-items-api
-  label: "SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD app settings"
-
 - type: Realization
   source: artifact-sql-appdb
   target: do-demo-items
+
+- {type: Assignment, source: node-static-web-app, target: artifact-static-site-appsettings, label: hosts}
+
+- type: Access
+  source: node-sql-server
+  target: artifact-static-site-appsettings
+  label: "provides FQDN for SQL_SERVER"
+  props:
+    access_type: Write
+
+- {type: Association, source: artifact-static-site-appsettings, target: app-items-api, label: "SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD app settings"}
 
 # --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
 

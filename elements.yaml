@@ -39,6 +39,14 @@
   props:
     sku: "GP_S_Gen5 (free limit, auto-pause)"
 
+- type: Artifact
+  id: artifact-static-site-appsettings
+  name: App Settings
+  desc: >-
+    Microsoft.Web/staticSites/config "appsettings" (main.bicep
+    staticSiteAppSettings) — SQL_SERVER, SQL_DATABASE, SQL_USER, SQL_PASSWORD
+    read by the Items API at runtime.
+
 # =====================================================================
 # Application — the Functions API and the data it reads/writes
 # =====================================================================
