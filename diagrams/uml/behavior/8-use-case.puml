@@ -1,0 +1,35 @@
+@startuml
+title Use case: sample-azure actors and goals
+
+left to right direction
+
+actor Visitor
+actor Operator
+
+rectangle "sample-azure" {
+  usecase "View demo items" as UC1
+  usecase "Initialize demo data\n(first request only)" as UC2
+  usecase "View build version" as UC3
+  usecase "Deploy infrastructure" as UC4
+  usecase "Provision Azure resources\n(main.bicep)" as UC5
+  usecase "Build & publish app\n(api/ + public/)" as UC6
+
+  Visitor --> UC1
+  Visitor --> UC3
+  UC1 .> UC2 : <<include>>
+
+  Operator --> UC4
+  UC4 .> UC5 : <<include>>
+  UC4 .> UC6 : <<include>>
+}
+
+note bottom of UC1
+  public/app.js: loadItems() calls
+  GET /api/items on page load.
+end note
+
+note bottom of UC4
+  README "Deploy": az login && bash deploy.sh
+end note
+
+@enduml

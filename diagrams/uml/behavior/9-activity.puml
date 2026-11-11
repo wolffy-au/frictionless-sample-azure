@@ -1,0 +1,24 @@
+@startuml
+title Activity: getItems() demo-table initialization and read
+
+start
+:Acquire sp_getapplock on\n"demo-items-initialization"\n(Exclusive, LockOwner=Transaction);
+if (Lock acquired?) then (no)
+  :THROW 51000\n"Could not acquire the demo data\ninitialization lock.";
+  stop
+else (yes)
+  if (dbo.DemoItems exists?) then (no)
+    :CREATE TABLE dbo.DemoItems\n(Id, Name, Category);
+  else (yes)
+  endif
+  if (dbo.DemoItems empty?) then (yes)
+    :INSERT 3 seed rows\n(Notebook/Stationery,\nCoffee mug/Kitchen,\nBackpack/Travel);
+  else (no)
+  endif
+  :COMMIT TRANSACTION;
+  :SELECT Id, Name, Category\nFROM dbo.DemoItems ORDER BY Id;
+  :Return recordset to handleItems();
+  stop
+endif
+
+@enduml

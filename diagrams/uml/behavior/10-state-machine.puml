@@ -1,0 +1,12 @@
+@startuml
+title State machine: Azure SQL free-tier database (appdb)
+
+[*] --> Active
+
+Active : dbo.DemoItems serves reads/writes
+Active --> Paused : free compute limit reached\n(freeLimitExhaustionBehavior: AutoPause)
+
+Paused : GET /api/items fails\n(500 "Unable to load demo items.\nCheck the API logs for details.")
+Paused --> Active : monthly free allowance resets
+
+@enduml
