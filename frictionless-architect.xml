@@ -17,15 +17,6 @@
       <name>Azure SQL Server</name>
       <documentation>Logical SQL server for the sample app's database.</documentation>
       <properties>
-        <property propertyDefinitionRef="propid-3">
-          <value>Enabled</value>
-        </property>
-        <property propertyDefinitionRef="propid-4">
-          <value>AllowAzureServices (0.0.0.0-0.0.0.0)</value>
-        </property>
-        <property propertyDefinitionRef="propid-5">
-          <value>1.2</value>
-        </property>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
         </property>
@@ -47,6 +38,24 @@
       <name>App Settings</name>
       <documentation>Microsoft.Web/staticSites/config "appsettings" (main.bicep staticSiteAppSettings) — SQL_SERVER, SQL_DATABASE, SQL_USER, SQL_PASSWORD read by the Items API at runtime.</documentation>
       <properties>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-5deb57760c7b5ff782805afdf0a52709" xsi:type="CommunicationNetwork">
+      <name>No-VNet Azure Network</name>
+      <documentation>Neither side has VNet integration or Private Link: the Static Web App (Visitor HTTPS ingress via the Web App Interface, and egress to SQL — no VNet option on Free tier) and the SQL Server's public endpoint (publicNetworkAccess: Enabled) share this unisolated network plane. Not the open internet: SQL access is additionally gated by the AllowAzureServices firewall rule, which admits any Azure tenant's services, not arbitrary internet hosts.</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-3">
+          <value>Enabled</value>
+        </property>
+        <property propertyDefinitionRef="propid-4">
+          <value>AllowAzureServices (0.0.0.0-0.0.0.0)</value>
+        </property>
+        <property propertyDefinitionRef="propid-5">
+          <value>1.2</value>
+        </property>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
         </property>
@@ -193,6 +202,8 @@
     <relationship identifier="id-5d8a52336da256e290240a797b2e7dfd" source="id-1ee4629338065d2fafc10f0f4fd6becc" target="id-b9118a54ded651d7b8872524243f8f51" xsi:type="Association">
       <name>SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD app settings</name>
     </relationship>
+    <relationship identifier="id-f3633622a74251bfa263b66e11de90a8" source="id-3db5d26be8ff5636bce7ce69f352db3c" target="id-5deb57760c7b5ff782805afdf0a52709" xsi:type="Association"/>
+    <relationship identifier="id-4509d7789a3358f18939aaaaf572136a" source="id-d447595fb73a5ff29894857ab28f8ffe" target="id-5deb57760c7b5ff782805afdf0a52709" xsi:type="Association"/>
     <relationship identifier="id-7db6279a41b05e31a85d5a89667bb388" source="id-d447595fb73a5ff29894857ab28f8ffe" target="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Assignment"/>
     <relationship identifier="id-47eb0f8f822a505ea723fcd975e6fa4a" source="id-3db5d26be8ff5636bce7ce69f352db3c" target="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Assignment"/>
     <relationship identifier="id-51e5662bb2e6573b9f4e2f5000fba6ae" source="id-d447595fb73a5ff29894857ab28f8ffe" target="id-30920e0c9a155dedb6c97d07fefde16e" xsi:type="Assignment"/>
@@ -254,6 +265,7 @@
       <item identifierRef="id-d447595fb73a5ff29894857ab28f8ffe"/>
       <item identifierRef="id-f0ecd6fb3b8b5bb69f24b39169314ce4"/>
       <item identifierRef="id-1ee4629338065d2fafc10f0f4fd6becc"/>
+      <item identifierRef="id-5deb57760c7b5ff782805afdf0a52709"/>
       <item identifierRef="id-76a7034dd9ab5366a50d57edc1dced70"/>
       <item identifierRef="id-33cc192ee35e5bb1ac6766d16cace9ee"/>
       <item identifierRef="id-30920e0c9a155dedb6c97d07fefde16e"/>
@@ -288,7 +300,7 @@
             </font>
           </style>
         </node>
-        <node identifier="id-8026c2d35a8f5ce4b8b280d18e2cef6b" elementRef="id-d447595fb73a5ff29894857ab28f8ffe" xsi:type="Element" x="240" y="0" w="100" h="80">
+        <node identifier="id-8026c2d35a8f5ce4b8b280d18e2cef6b" elementRef="id-d447595fb73a5ff29894857ab28f8ffe" xsi:type="Element" x="480" y="0" w="100" h="80">
           <style>
             <font name="Arial" size="10">
               <color r="0" g="0" b="0"/>
@@ -309,14 +321,21 @@
             </font>
           </style>
         </node>
-        <node identifier="id-757c722d0376526192f5b45c94a70c0c" elementRef="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Element" x="480" y="0" w="100" h="70">
+        <node identifier="id-ab9206a422575a17b3a5d2ff7aaed1b7" elementRef="id-5deb57760c7b5ff782805afdf0a52709" xsi:type="Element" x="960" y="0" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-757c722d0376526192f5b45c94a70c0c" elementRef="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Element" x="1200" y="0" w="100" h="70">
           <style>
             <font name="Arial" size="9">
               <color r="0" g="0" b="0"/>
             </font>
           </style>
         </node>
-        <node identifier="id-da00fab5e1dd504e8f512bfb2b802ec5" elementRef="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Element" x="720" y="0" w="100" h="70">
+        <node identifier="id-da00fab5e1dd504e8f512bfb2b802ec5" elementRef="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Element" x="1440" y="0" w="100" h="70">
           <style>
             <font name="Arial" size="9">
               <color r="0" g="0" b="0"/>
@@ -352,6 +371,20 @@
           </style>
         </connection>
         <connection identifier="id-b8d609d678395370a5296c8f9fa6aeb3" relationshipRef="id-7c8f1e7c4e195a319f925647aa1fa2e6" xsi:type="Relationship" source="id-8026c2d35a8f5ce4b8b280d18e2cef6b" target="id-cd93b7ba3468550eb89de76388029241">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-11117e6ae29152f497006cad4fe2cfc1" relationshipRef="id-f3633622a74251bfa263b66e11de90a8" xsi:type="Relationship" source="id-8e068fb8dc2b5cb98bfb94790506713d" target="id-ab9206a422575a17b3a5d2ff7aaed1b7">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-d42ebc175bcf5eb5b7a84d09e2a8ccae" relationshipRef="id-4509d7789a3358f18939aaaaf572136a" xsi:type="Relationship" source="id-8026c2d35a8f5ce4b8b280d18e2cef6b" target="id-ab9206a422575a17b3a5d2ff7aaed1b7">
           <style lineWidth="1">
             <font name="Segoe UI" size="9">
               <color r="0" g="0" b="0"/>

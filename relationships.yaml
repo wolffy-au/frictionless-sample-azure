@@ -24,6 +24,10 @@
 
 - {type: Association, source: artifact-static-site-appsettings, target: app-items-api, label: "SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD app settings"}
 
+# --- Technology: no VNet/private endpoint on either side (main.bicep) ---
+- {type: Association, source: node-static-web-app, target: comm-no-vnet-azure-network}
+- {type: Association, source: node-sql-server, target: comm-no-vnet-azure-network}
+
 # --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
 
 # --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---

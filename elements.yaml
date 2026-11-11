@@ -25,10 +25,6 @@
   id: node-sql-server
   name: Azure SQL Server
   desc: Logical SQL server for the sample app's database.
-  props:
-    public-network-access: Enabled
-    firewall-rule: "AllowAzureServices (0.0.0.0-0.0.0.0)"
-    min-tls-version: "1.2"
 
 - type: Artifact
   id: artifact-sql-appdb
@@ -46,6 +42,22 @@
     Microsoft.Web/staticSites/config "appsettings" (main.bicep
     staticSiteAppSettings) — SQL_SERVER, SQL_DATABASE, SQL_USER, SQL_PASSWORD
     read by the Items API at runtime.
+
+- type: CommunicationNetwork
+  id: comm-no-vnet-azure-network
+  name: No-VNet Azure Network
+  desc: >-
+    Neither side has VNet integration or Private Link: the Static Web App
+    (Visitor HTTPS ingress via the Web App Interface, and egress to SQL — no
+    VNet option on Free tier) and the SQL Server's public endpoint
+    (publicNetworkAccess: Enabled) share this unisolated network plane. Not
+    the open internet: SQL access is additionally gated by the
+    AllowAzureServices firewall rule, which admits any Azure tenant's
+    services, not arbitrary internet hosts.
+  props:
+    public-network-access: Enabled
+    firewall-rule: "AllowAzureServices (0.0.0.0-0.0.0.0)"
+    min-tls-version: "1.2"
 
 # =====================================================================
 # Application — the Functions API and the data it reads/writes
