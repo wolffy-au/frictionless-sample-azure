@@ -1,20 +1,57 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Exit immediately if a command exits with a non-zero status
-set -e
+RESOURCE_GROUP="${RESOURCE_GROUP:-MyRG-centralus}"
+LOCATION="${LOCATION:-centralus}"
 
-# Variables
-RESOURCE_GROUP="MyRG-centralus"
-LOCATION="centralus"
-DB_PASSWORD="<your-sql-admin-password>"
+if [[ -z "${DB_ADMIN_PASSWORD:-}" ]]; then
+  read -r -s -p "SQL administrator password: " DB_ADMIN_PASSWORD
+  printf '\n'
+fi
 
-echo "Creating Resource Group..."
-az group create --name $RESOURCE_GROUP --location $LOCATION
+if [[ -z "$DB_ADMIN_PASSWORD" ]]; then
+  echo "DB_ADMIN_PASSWORD must not be empty." >&2
+  exit 1
+fi
 
-echo "Deploying Infrastructure via Bicep..."
-az deployment group create \
-  --resource-group $RESOURCE_GROUP \
+echo "Creating resource group..."
+az group create --name "$RESOURCE_GROUP" --location "$LOCATION" --output none
+
+echo "Deploying infrastructure..."
+STATIC_WEB_APP_NAME=$(az deployment group create \
+  --resource-group "$RESOURCE_GROUP" \
   --template-file main.bicep \
-  --parameters dbAdminPassword=$DB_PASSWORD
+  --parameters location="$LOCATION" dbAdminPassword="$DB_ADMIN_PASSWORD" \
+  --query 'properties.outputs.staticWebAppName.value' \
+  --output tsv)
 
-echo "Deployment finished successfully!"
+echo "Building the API..."
+npm --prefix api ci
+npm --prefix api run build
+
+echo "Getting the Static Web App deployment token..."
+SWA_CLI_DEPLOYMENT_TOKEN=$(az staticwebapp secrets list \
+  --name "$STATIC_WEB_APP_NAME" \
+  --resource-group "$RESOURCE_GROUP" \
+  --query properties.apiKey \
+  --output tsv)
+
+if [[ -z "$SWA_CLI_DEPLOYMENT_TOKEN" || "$SWA_CLI_DEPLOYMENT_TOKEN" == "None" ]]; then
+  echo "Could not retrieve a deployment token for '$STATIC_WEB_APP_NAME'." >&2
+  exit 1
+fi
+
+export SWA_CLI_DEPLOYMENT_TOKEN
+echo "Deploying the frontend and API..."
+npm --prefix api exec -- swa deploy ./public \
+  --api-location ./api \
+  --api-language node \
+  --api-version 20 \
+  --deployment-token "$SWA_CLI_DEPLOYMENT_TOKEN" \
+  --app-name "$STATIC_WEB_APP_NAME" \
+  --resource-group "$RESOURCE_GROUP" \
+  --subscription-id "$(az account show --query id --output tsv)" \
+  --tenant-id "$(az account show --query tenantId --output tsv)" \
+  --env production
+
+echo "Deployment finished. Open the Static Web App and the API will create the demo table and three sample rows on first request."
