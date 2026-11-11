@@ -8,6 +8,8 @@ Technology_Node(e_id3db5d26be8ff56, "Static Web App") {
   Technology_Artifact(e_id1ee4629338065d, "Database Config")
   Technology_Interface(e_id33cc192ee35e5b, "Web App Interface")
   Technology_SystemSoftware(e_id3b81282895f35e, "Azure Static Web App Software")
+  Technology_SystemSoftware(e_id0d25a940b29254, "Node.js 24 Runtime")
+  Technology_SystemSoftware(e_id4c5fc1cbb2f459, "mssql Driver (v11)")
 }
 Technology_Node(e_idd447595fb73a5f, "Azure SQL Server") {
   Technology_Artifact(e_idf0ecd6fb3b8b5b, "appdb")
@@ -46,5 +48,8 @@ Rel_Serving_Up(e_idd8a8c6ca248e52, e_id66a63993dfde51, "provides access for")
 Rel_Association(e_id454e7b903b8357, e_id33cc192ee35e5b, "")
 Rel_Association(e_id5deb57760c7b5f, e_id76a7034dd9ab53, "")
 Rel_Access(e_id3b81282895f35e, e_id1ee4629338065d, "")
+Rel_Serving_Up(e_id0d25a940b29254, e_idb9118a54ded651, "executes")
+Rel_Serving_Up(e_id4c5fc1cbb2f459, e_idb9118a54ded651, "provides SQL connectivity")
+Rel_Serving_Up(e_id76a7034dd9ab53, e_id4c5fc1cbb2f459, "TDS")
 
 @enduml

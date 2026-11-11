@@ -160,6 +160,24 @@
         </property>
       </properties>
     </element>
+    <element identifier="id-0d25a940b292543898ac63534f1eb9df" xsi:type="SystemSoftware">
+      <name>Node.js 24 Runtime</name>
+      <documentation>Server-side JS runtime hosting the compiled Items API (api/package.json engines.node &gt;=24; see uml/structure/6-deployment.puml). Does not run the Frontend, which executes in the Visitor's browser, not this runtime.</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-4c5fc1cbb2f4595abcc5c9849903200a" xsi:type="SystemSoftware">
+      <name>mssql Driver (v11)</name>
+      <documentation>npm `mssql` package (api/package.json direct dependency) — the TDS client library getPool()/getItems() use to reach Azure SQL (see uml/structure/3-component.puml's "TDS (mssql)" interface).</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
     <element identifier="id-40e6f8deb4f45ccab3fc62c7675097b6" xsi:type="BusinessActor">
       <name>Visitor</name>
       <documentation>End user browsing the deployed Static Web App (8-use-case.puml).</documentation>
@@ -249,6 +267,21 @@
     <relationship identifier="id-8f9df4896249567e91122c88fff2b1ef" source="id-454e7b903b83570699490736727db0f5" target="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Association"/>
     <relationship identifier="id-60fda6e7f09c570f9f9c080ff574c116" source="id-5deb57760c7b5ff782805afdf0a52709" target="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Association"/>
     <relationship identifier="id-5b0ca3d0944253eaa81e62c80afbb548" source="id-3b81282895f35e30a238f6ed3dfeee13" target="id-1ee4629338065d2fafc10f0f4fd6becc" xsi:type="Access"/>
+    <relationship identifier="id-bade086abe625218b99eb16f5a920476" source="id-3db5d26be8ff5636bce7ce69f352db3c" target="id-0d25a940b292543898ac63534f1eb9df" xsi:type="Assignment">
+      <name>hosts</name>
+    </relationship>
+    <relationship identifier="id-20d0d42ea1fd50a889728b7aa540f04c" source="id-0d25a940b292543898ac63534f1eb9df" target="id-b9118a54ded651d7b8872524243f8f51" xsi:type="Serving">
+      <name>executes</name>
+    </relationship>
+    <relationship identifier="id-941ea71441155bdfb19bb4b34ae2b3cd" source="id-3db5d26be8ff5636bce7ce69f352db3c" target="id-4c5fc1cbb2f4595abcc5c9849903200a" xsi:type="Assignment">
+      <name>hosts</name>
+    </relationship>
+    <relationship identifier="id-584dd195cf7f538ab9263f432f6e29a3" source="id-4c5fc1cbb2f4595abcc5c9849903200a" target="id-b9118a54ded651d7b8872524243f8f51" xsi:type="Serving">
+      <name>provides SQL connectivity</name>
+    </relationship>
+    <relationship identifier="id-902716f7f79250f389f7f055232b5684" source="id-76a7034dd9ab5366a50d57edc1dced70" target="id-4c5fc1cbb2f4595abcc5c9849903200a" xsi:type="Serving">
+      <name>TDS</name>
+    </relationship>
   </relationships>
   <organizations>
     <item>
@@ -279,6 +312,8 @@
       <item identifierRef="id-33cc192ee35e5bb1ac6766d16cace9ee"/>
       <item identifierRef="id-30920e0c9a155dedb6c97d07fefde16e"/>
       <item identifierRef="id-3b81282895f35e30a238f6ed3dfeee13"/>
+      <item identifierRef="id-0d25a940b292543898ac63534f1eb9df"/>
+      <item identifierRef="id-4c5fc1cbb2f4595abcc5c9849903200a"/>
     </item>
   </organizations>
   <propertyDefinitions>
@@ -309,7 +344,7 @@
             </font>
           </style>
         </node>
-        <node identifier="id-8026c2d35a8f5ce4b8b280d18e2cef6b" elementRef="id-d447595fb73a5ff29894857ab28f8ffe" xsi:type="Element" x="240" y="0" w="100" h="80">
+        <node identifier="id-8026c2d35a8f5ce4b8b280d18e2cef6b" elementRef="id-d447595fb73a5ff29894857ab28f8ffe" xsi:type="Element" x="480" y="0" w="100" h="80">
           <style>
             <font name="Arial" size="10">
               <color r="0" g="0" b="0"/>
@@ -330,28 +365,28 @@
             </font>
           </style>
         </node>
-        <node identifier="id-ab9206a422575a17b3a5d2ff7aaed1b7" elementRef="id-5deb57760c7b5ff782805afdf0a52709" xsi:type="Element" x="480" y="0" w="100" h="80">
+        <node identifier="id-ab9206a422575a17b3a5d2ff7aaed1b7" elementRef="id-5deb57760c7b5ff782805afdf0a52709" xsi:type="Element" x="720" y="0" w="100" h="80">
           <style>
             <font name="Arial" size="10">
               <color r="0" g="0" b="0"/>
             </font>
           </style>
         </node>
-        <node identifier="id-99705d40c3d7563b80a9530547642185" elementRef="id-454e7b903b83570699490736727db0f5" xsi:type="Element" x="720" y="0" w="100" h="80">
+        <node identifier="id-99705d40c3d7563b80a9530547642185" elementRef="id-454e7b903b83570699490736727db0f5" xsi:type="Element" x="960" y="0" w="100" h="80">
           <style>
             <font name="Arial" size="10">
               <color r="0" g="0" b="0"/>
             </font>
           </style>
         </node>
-        <node identifier="id-757c722d0376526192f5b45c94a70c0c" elementRef="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Element" x="960" y="0" w="100" h="70">
+        <node identifier="id-757c722d0376526192f5b45c94a70c0c" elementRef="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Element" x="1200" y="0" w="100" h="70">
           <style>
             <font name="Arial" size="9">
               <color r="0" g="0" b="0"/>
             </font>
           </style>
         </node>
-        <node identifier="id-da00fab5e1dd504e8f512bfb2b802ec5" elementRef="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Element" x="1200" y="0" w="100" h="70">
+        <node identifier="id-da00fab5e1dd504e8f512bfb2b802ec5" elementRef="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Element" x="1440" y="0" w="100" h="70">
           <style>
             <font name="Arial" size="9">
               <color r="0" g="0" b="0"/>
@@ -366,6 +401,20 @@
           </style>
         </node>
         <node identifier="id-dc9087f28ccb5282be2983943a930262" elementRef="id-3b81282895f35e30a238f6ed3dfeee13" xsi:type="Element" x="720" y="480" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-c0e5db247750584e8f2b0876678c388b" elementRef="id-0d25a940b292543898ac63534f1eb9df" xsi:type="Element" x="960" y="480" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-af292b84ae6d520fa49a85df3e6d898d" elementRef="id-4c5fc1cbb2f4595abcc5c9849903200a" xsi:type="Element" x="1200" y="480" w="100" h="80">
           <style>
             <font name="Arial" size="10">
               <color r="0" g="0" b="0"/>
@@ -436,6 +485,27 @@
           </style>
         </connection>
         <connection identifier="id-acd77c3117635a468590be97cbe4a3dc" relationshipRef="id-5b0ca3d0944253eaa81e62c80afbb548" xsi:type="Relationship" source="id-dc9087f28ccb5282be2983943a930262" target="id-cd93b7ba3468550eb89de76388029241">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-fe8217a3d4ba51f6ad56df6a6b28eee2" relationshipRef="id-bade086abe625218b99eb16f5a920476" xsi:type="Relationship" source="id-8e068fb8dc2b5cb98bfb94790506713d" target="id-c0e5db247750584e8f2b0876678c388b">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-57c33730f2325c89b4de872407d4e67b" relationshipRef="id-941ea71441155bdfb19bb4b34ae2b3cd" xsi:type="Relationship" source="id-8e068fb8dc2b5cb98bfb94790506713d" target="id-af292b84ae6d520fa49a85df3e6d898d">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-50474514bd735eab9e98c02625bf1a2b" relationshipRef="id-902716f7f79250f389f7f055232b5684" xsi:type="Relationship" source="id-757c722d0376526192f5b45c94a70c0c" target="id-af292b84ae6d520fa49a85df3e6d898d">
           <style lineWidth="1">
             <font name="Segoe UI" size="9">
               <color r="0" g="0" b="0"/>
@@ -759,6 +829,20 @@
             </font>
           </style>
         </node>
+        <node identifier="id-0a47bfb05a7f5746ac551607925cda6b" elementRef="id-0d25a940b292543898ac63534f1eb9df" xsi:type="Element" x="960" y="1440" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-3a44082c714854adb1a2610a6c49a60d" elementRef="id-4c5fc1cbb2f4595abcc5c9849903200a" xsi:type="Element" x="1200" y="1440" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
         <node identifier="id-41cf039d3c3c55b2ad19096e37858a2f" elementRef="id-40e6f8deb4f45ccab3fc62c7675097b6" xsi:type="Element" x="0" y="0" w="100" h="80">
           <style>
             <font name="Arial" size="10">
@@ -970,6 +1054,41 @@
           </style>
         </connection>
         <connection identifier="id-5c72741c65ac5327b3e21e2479e30dad" relationshipRef="id-5b0ca3d0944253eaa81e62c80afbb548" xsi:type="Relationship" source="id-31b44f773fa651a8be802e44955a9bf0" target="id-88186512bc6d540ba70d7711da21d671">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-bd9324edcc0d5d3a8a08667fffa179db" relationshipRef="id-bade086abe625218b99eb16f5a920476" xsi:type="Relationship" source="id-a9d77c5268315f96af7235c35f01b626" target="id-0a47bfb05a7f5746ac551607925cda6b">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-07c68509f89b53359044617abc505301" relationshipRef="id-20d0d42ea1fd50a889728b7aa540f04c" xsi:type="Relationship" source="id-0a47bfb05a7f5746ac551607925cda6b" target="id-14da7de7af3e58b2adc02c13c5f028f0">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-55bb4d4b1e2a5de0a6098ace2e300f3f" relationshipRef="id-941ea71441155bdfb19bb4b34ae2b3cd" xsi:type="Relationship" source="id-a9d77c5268315f96af7235c35f01b626" target="id-3a44082c714854adb1a2610a6c49a60d">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-1f7856c553f15a569e7ea18c375f5863" relationshipRef="id-584dd195cf7f538ab9263f432f6e29a3" xsi:type="Relationship" source="id-3a44082c714854adb1a2610a6c49a60d" target="id-14da7de7af3e58b2adc02c13c5f028f0">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-bdf8e5abd17254378d8fd2704a0a3204" relationshipRef="id-902716f7f79250f389f7f055232b5684" xsi:type="Relationship" source="id-35e896ffb1045e279d94077f71a81653" target="id-3a44082c714854adb1a2610a6c49a60d">
           <style lineWidth="1">
             <font name="Segoe UI" size="9">
               <color r="0" g="0" b="0"/>

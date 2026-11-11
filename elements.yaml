@@ -117,6 +117,22 @@
 - {type: SystemSoftware, id: sys-azure-sql-server, name: Azure SQL Server Software, desc: System software representing the Azure SQL Server (Microsoft.Sql/servers).}
 - {type: SystemSoftware, id: sys-azure-static-site, name: Azure Static Web App Software, desc: System software representing the Azure Static Web App (Microsoft.Web/staticSites).}
 
+- type: SystemSoftware
+  id: sys-nodejs-runtime
+  name: Node.js 24 Runtime
+  desc: >-
+    Server-side JS runtime hosting the compiled Items API (api/package.json
+    engines.node >=24; see uml/structure/6-deployment.puml). Does not run
+    the Frontend, which executes in the Visitor's browser, not this runtime.
+
+- type: SystemSoftware
+  id: sys-mssql-driver
+  name: "mssql Driver (v11)"
+  desc: >-
+    npm `mssql` package (api/package.json direct dependency) — the TDS
+    client library getPool()/getItems() use to reach Azure SQL (see
+    uml/structure/3-component.puml's "TDS (mssql)" interface).
+
 # =====================================================================
 # Business — the people-facing use of the demo app
 # =====================================================================
