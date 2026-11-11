@@ -1,0 +1,64 @@
+# sample-azure — model elements
+#
+# Standalone ArchiMate model for this directory (FRICTIONLESS_MODEL_DIR points
+# here — see platform/packages/modelling-specification's README and
+# architecture/model/README.md for the schema).
+#
+# Schema:  type / id / name / desc? / props?
+#   type   bare ArchiMate 3.2 concept name (pyArchimate.ArchiType), case-insensitive
+#   id     stable kebab id -> deterministic UUID (never renumber a live id)
+#   props  str->str
+
+# =====================================================================
+# Technology — infrastructure provisioned by main.bicep
+# =====================================================================
+- type: Node
+  id: node-static-web-app
+  name: Static Web App
+  desc: >-
+    Azure Static Web App (Free tier) hosting the public/ frontend and its
+    integrated Functions API (api/).
+  props:
+    sku: Free
+
+- type: Node
+  id: node-sql-server
+  name: Azure SQL Server
+  desc: Logical SQL server for the sample app's database.
+  props:
+    public-network-access: Enabled
+    firewall-rule: "AllowAzureServices (0.0.0.0-0.0.0.0)"
+    min-tls-version: "1.2"
+
+- type: Artifact
+  id: artifact-sql-appdb
+  name: appdb
+  desc: >-
+    Free-tier serverless Azure SQL database (GP_S_Gen5). Holds dbo.DemoItems,
+    created and seeded by the API on first request.
+  props:
+    sku: "GP_S_Gen5 (free limit, auto-pause)"
+
+# =====================================================================
+# Application — the Functions API and the data it reads/writes
+# =====================================================================
+- type: ApplicationComponent
+  id: app-items-api
+  name: Items API
+  desc: >-
+    TypeScript Azure Functions API (api/src/functions/items.ts). The page
+    calls /api/items; on first request it creates dbo.DemoItems and inserts
+    three sample rows if the table is empty.
+
+- type: DataObject
+  id: do-demo-items
+  name: DemoItems
+  desc: dbo.DemoItems table — created and seeded by the Items API on first request.
+
+# --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
+- {type: TechnologyInterface, id: int-sql-server, name: SQL Server Interface, desc: Interface exposed by Azure SQL Server for external communication.}
+- {type: TechnologyInterface, id: int-web-app, name: Web App Interface, desc: Interface exposed by the Static Web App for external communication.}
+
+# --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
+- {type: SystemSoftware, id: sys-azure-sql-server, name: Azure SQL Server Software, desc: System software representing the Azure SQL Server (Microsoft.Sql/servers).}
+- {type: SystemSoftware, id: sys-azure-static-site, name: Azure Static Web App Software, desc: System software representing the Azure Static Web App (Microsoft.Web/staticSites).}

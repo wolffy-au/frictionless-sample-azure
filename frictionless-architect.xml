@@ -1,0 +1,266 @@
+<model xmlns="http://www.opengroup.org/xsd/archimate/3.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengroup.org/xsd/archimate/3.0/ http://www.opengroup.org/xsd/archimate/3.0/archimate3.xsd" identifier="id-a84d2455d48c44a2847b3407e270599f">
+  <name>frictionless-architect</name>
+  <elements>
+    <element identifier="id-3db5d26be8ff5636bce7ce69f352db3c" xsi:type="Node">
+      <name>Static Web App</name>
+      <documentation>Azure Static Web App (Free tier) hosting the public/ frontend and its integrated Functions API (api/).</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-1">
+          <value>Free</value>
+        </property>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-d447595fb73a5ff29894857ab28f8ffe" xsi:type="Node">
+      <name>Azure SQL Server</name>
+      <documentation>Logical SQL server for the sample app's database.</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-3">
+          <value>Enabled</value>
+        </property>
+        <property propertyDefinitionRef="propid-4">
+          <value>AllowAzureServices (0.0.0.0-0.0.0.0)</value>
+        </property>
+        <property propertyDefinitionRef="propid-5">
+          <value>1.2</value>
+        </property>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-f0ecd6fb3b8b5bb69f24b39169314ce4" xsi:type="Artifact">
+      <name>appdb</name>
+      <documentation>Free-tier serverless Azure SQL database (GP_S_Gen5). Holds dbo.DemoItems, created and seeded by the API on first request.</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-1">
+          <value>GP_S_Gen5 (free limit, auto-pause)</value>
+        </property>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-b9118a54ded651d7b8872524243f8f51" xsi:type="ApplicationComponent">
+      <name>Items API</name>
+      <documentation>TypeScript Azure Functions API (api/src/functions/items.ts). The page calls /api/items; on first request it creates dbo.DemoItems and inserts three sample rows if the table is empty.</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-032efff5924e5ef3b57593ad5595b7df" xsi:type="DataObject">
+      <name>DemoItems</name>
+      <documentation>dbo.DemoItems table — created and seeded by the Items API on first request.</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="TechnologyInterface">
+      <name>SQL Server Interface</name>
+      <documentation>Interface exposed by Azure SQL Server for external communication.</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="TechnologyInterface">
+      <name>Web App Interface</name>
+      <documentation>Interface exposed by the Static Web App for external communication.</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-30920e0c9a155dedb6c97d07fefde16e" xsi:type="SystemSoftware">
+      <name>Azure SQL Server Software</name>
+      <documentation>System software representing the Azure SQL Server (Microsoft.Sql/servers).</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-3b81282895f35e30a238f6ed3dfeee13" xsi:type="SystemSoftware">
+      <name>Azure Static Web App Software</name>
+      <documentation>System software representing the Azure Static Web App (Microsoft.Web/staticSites).</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
+  </elements>
+  <relationships>
+    <relationship identifier="id-c4edb9659c9b54a6846c91c74c7ca813" source="id-d447595fb73a5ff29894857ab28f8ffe" target="id-f0ecd6fb3b8b5bb69f24b39169314ce4" xsi:type="Assignment">
+      <name>hosts</name>
+    </relationship>
+    <relationship identifier="id-bf0e00095d165d9ea7f45d5396abf2b9" source="id-d447595fb73a5ff29894857ab28f8ffe" target="id-b9118a54ded651d7b8872524243f8f51" xsi:type="Serving">
+      <name>SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD app settings</name>
+    </relationship>
+    <relationship identifier="id-8ca3e7ec2f6553ff94d398b3affa9ff0" source="id-b9118a54ded651d7b8872524243f8f51" target="id-032efff5924e5ef3b57593ad5595b7df" xsi:type="Access" accessType="ReadWrite">
+      <name>read/write</name>
+    </relationship>
+    <relationship identifier="id-db7b0346a7d05b0aa26ffaf1a80287b6" source="id-f0ecd6fb3b8b5bb69f24b39169314ce4" target="id-032efff5924e5ef3b57593ad5595b7df" xsi:type="Realization"/>
+    <relationship identifier="id-7db6279a41b05e31a85d5a89667bb388" source="id-d447595fb73a5ff29894857ab28f8ffe" target="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Assignment"/>
+    <relationship identifier="id-47eb0f8f822a505ea723fcd975e6fa4a" source="id-3db5d26be8ff5636bce7ce69f352db3c" target="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Assignment"/>
+    <relationship identifier="id-51e5662bb2e6573b9f4e2f5000fba6ae" source="id-d447595fb73a5ff29894857ab28f8ffe" target="id-30920e0c9a155dedb6c97d07fefde16e" xsi:type="Assignment"/>
+    <relationship identifier="id-2f40959555f8561d87c981226a1ac1cc" source="id-3db5d26be8ff5636bce7ce69f352db3c" target="id-3b81282895f35e30a238f6ed3dfeee13" xsi:type="Assignment"/>
+  </relationships>
+  <organizations>
+    <item>
+      <label>Application</label>
+      <item identifierRef="id-b9118a54ded651d7b8872524243f8f51"/>
+      <item identifierRef="id-032efff5924e5ef3b57593ad5595b7df"/>
+    </item>
+    <item>
+      <label>Technology</label>
+      <item identifierRef="id-3db5d26be8ff5636bce7ce69f352db3c"/>
+      <item identifierRef="id-d447595fb73a5ff29894857ab28f8ffe"/>
+      <item identifierRef="id-f0ecd6fb3b8b5bb69f24b39169314ce4"/>
+      <item identifierRef="id-76a7034dd9ab5366a50d57edc1dced70"/>
+      <item identifierRef="id-33cc192ee35e5bb1ac6766d16cace9ee"/>
+      <item identifierRef="id-30920e0c9a155dedb6c97d07fefde16e"/>
+      <item identifierRef="id-3b81282895f35e30a238f6ed3dfeee13"/>
+    </item>
+  </organizations>
+  <propertyDefinitions>
+    <propertyDefinition identifier="propid-1" type="string">
+      <name>sku</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="propid-2" type="string">
+      <name>context</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="propid-3" type="string">
+      <name>public-network-access</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="propid-4" type="string">
+      <name>firewall-rule</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="propid-5" type="string">
+      <name>min-tls-version</name>
+    </propertyDefinition>
+  </propertyDefinitions>
+  <views>
+    <diagrams>
+      <view identifier="id-880981fc558956a18f0a5d3aa625c33c" xsi:type="Diagram">
+        <name>Technology: sample-azure Infrastructure</name>
+        <node identifier="id-8e068fb8dc2b5cb98bfb94790506713d" elementRef="id-3db5d26be8ff5636bce7ce69f352db3c" xsi:type="Element" x="0" y="0" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-8026c2d35a8f5ce4b8b280d18e2cef6b" elementRef="id-d447595fb73a5ff29894857ab28f8ffe" xsi:type="Element" x="240" y="0" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-b8c632864df355eea52ff0eb3b2ac7e0" elementRef="id-f0ecd6fb3b8b5bb69f24b39169314ce4" xsi:type="Element" x="0" y="480" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-757c722d0376526192f5b45c94a70c0c" elementRef="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Element" x="480" y="0" w="100" h="70">
+          <style>
+            <font name="Arial" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-da00fab5e1dd504e8f512bfb2b802ec5" elementRef="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Element" x="720" y="0" w="100" h="70">
+          <style>
+            <font name="Arial" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-664095b6f6d9564985c55a9e8d337d27" elementRef="id-30920e0c9a155dedb6c97d07fefde16e" xsi:type="Element" x="240" y="480" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-dc9087f28ccb5282be2983943a930262" elementRef="id-3b81282895f35e30a238f6ed3dfeee13" xsi:type="Element" x="480" y="480" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <connection identifier="id-a2b2863e1f95553fbaba0eb87d31182e" relationshipRef="id-c4edb9659c9b54a6846c91c74c7ca813" xsi:type="Relationship" source="id-8026c2d35a8f5ce4b8b280d18e2cef6b" target="id-b8c632864df355eea52ff0eb3b2ac7e0">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-4d8ecd6000635c79b92f27158ccc8464" relationshipRef="id-7db6279a41b05e31a85d5a89667bb388" xsi:type="Relationship" source="id-8026c2d35a8f5ce4b8b280d18e2cef6b" target="id-757c722d0376526192f5b45c94a70c0c">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-292aa984fdb555f489d36bff4cbc0d10" relationshipRef="id-47eb0f8f822a505ea723fcd975e6fa4a" xsi:type="Relationship" source="id-8e068fb8dc2b5cb98bfb94790506713d" target="id-da00fab5e1dd504e8f512bfb2b802ec5">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-86db8f49a00b5567831ac8acac12ab07" relationshipRef="id-51e5662bb2e6573b9f4e2f5000fba6ae" xsi:type="Relationship" source="id-8026c2d35a8f5ce4b8b280d18e2cef6b" target="id-664095b6f6d9564985c55a9e8d337d27">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-d240b52eb8fa5dcda992b01382e825e3" relationshipRef="id-2f40959555f8561d87c981226a1ac1cc" xsi:type="Relationship" source="id-8e068fb8dc2b5cb98bfb94790506713d" target="id-dc9087f28ccb5282be2983943a930262">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+      </view>
+      <view identifier="id-5d1c475b8bb55989a7e828cfdbdda4ea" xsi:type="Diagram">
+        <name>Application: sample-azure Cooperation</name>
+        <node identifier="id-0b649a33e0ad5583baa78e1a76ff15ae" elementRef="id-b9118a54ded651d7b8872524243f8f51" xsi:type="Element" x="0" y="0" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-bbc40a6213e156ff86ee861fb547dcf0" elementRef="id-032efff5924e5ef3b57593ad5595b7df" xsi:type="Element" x="240" y="0" w="80" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <connection identifier="id-1909be23e142587489510eadfd1a2d11" relationshipRef="id-8ca3e7ec2f6553ff94d398b3affa9ff0" xsi:type="Relationship" source="id-0b649a33e0ad5583baa78e1a76ff15ae" target="id-bbc40a6213e156ff86ee861fb547dcf0">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+      </view>
+    </diagrams>
+  </views>
+</model>

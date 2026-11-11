@@ -1,0 +1,12 @@
+@startuml
+!include <archimate/Archimate>
+
+scale max 3800 width
+title Application: sample-azure Cooperation
+
+Application_Component(e_idb9118a54ded651, "Items API")
+Application_DataObject(e_id032efff5924e5e, "DemoItems")
+
+Rel_Access_rw(e_idb9118a54ded651, e_id032efff5924e5e, "read/write")
+
+@enduml

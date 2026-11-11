@@ -1,0 +1,38 @@
+# sample-azure — model relationships
+#
+# Schema:  type / source / target / label? / props?
+#   type    ArchiMate 3.2 relationship name, case-insensitive
+#   source  element id      target  element id
+
+- type: Assignment
+  source: node-sql-server
+  target: artifact-sql-appdb
+  label: hosts
+
+- type: Serving
+  source: node-sql-server
+  target: app-items-api
+  label: "SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD app settings"
+
+- type: Access
+  source: app-items-api
+  target: do-demo-items
+  label: read/write
+  props:
+    access_type: ReadWrite
+
+- type: Realization
+  source: artifact-sql-appdb
+  target: do-demo-items
+
+# --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
+
+# --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
+- {type: Assignment, source: node-sql-server, target: int-sql-server}
+- {type: Assignment, source: node-static-web-app, target: int-web-app}
+
+# --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
+
+# --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
+- {type: Assignment, source: node-sql-server, target: sys-azure-sql-server}
+- {type: Assignment, source: node-static-web-app, target: sys-azure-static-site}

@@ -1,0 +1,39 @@
+# sample-azure — view scoping. Schema: see architecture/model/views.yaml.
+
+- id: view-sample-azure-technology
+  name: "Technology: sample-azure Infrastructure"
+  viewpoint: technology
+  diagram: technology/overview
+  include_types:
+    - Location
+    - Node
+    - TechnologyCollaboration
+    - Device
+    - SystemSoftware
+    - TechnologyInterface
+    - CommunicationNetwork
+    - Path
+    - TechnologyProcess
+    - TechnologyFunction
+    - TechnologyInteraction
+    - TechnologyService
+    - TechnologyEvent
+    - Artifact
+
+- id: view-sample-azure-application
+  name: "Application: sample-azure Cooperation"
+  viewpoint: application_cooperation
+  diagram: application/cooperation-standard
+  include_types:
+    - Location
+    - ApplicationComponent
+    - ApplicationCollaboration
+    - ApplicationInterface
+    - ApplicationProcess
+    - ApplicationFunction
+    - ApplicationInteraction
+    - ApplicationEvent
+    - ApplicationService
+    - DataObject
+  no_direction: [Flow]
+  max_width: 3800
