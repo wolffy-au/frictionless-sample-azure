@@ -126,3 +126,37 @@
     - DataObject
   no_direction: [Flow]
   max_width: 3800
+
+- id: view-sample-azure-technology-usage
+  name: "Technology Usage"
+  # Generic Technology Usage viewpoint (ArchiMate 3.2 §14): the demand
+  # side — how app-items-api/app-frontend are supported by the Node.js
+  # runtime, Azure Functions Worker, mssql driver and the underlying
+  # Nodes/Interfaces/Artifacts. DataObject is in the spec's element table
+  # but not in the vendored Archi allow-list (archi-viewpoints.xml), which
+  # the build enforces, so it is omitted here too (matches the root
+  # model's view-technology-usage).
+  viewpoint: technology_usage
+  diagram: technology/usage
+  include_types:
+    - ApplicationComponent
+    - ApplicationCollaboration
+    - ApplicationProcess
+    - ApplicationFunction
+    - ApplicationInteraction
+    - ApplicationEvent
+    - Node
+    - Device
+    - TechnologyCollaboration
+    - SystemSoftware
+    - TechnologyInterface
+    - CommunicationNetwork
+    - Path
+    - TechnologyProcess
+    - TechnologyFunction
+    - TechnologyInteraction
+    - TechnologyService
+    - TechnologyEvent
+    - Artifact
+  no_direction: [Flow]
+  max_width: 3800
