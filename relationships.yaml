@@ -81,7 +81,9 @@
 
 # --- Technology: runtime stack behind the Items API only, not the Frontend (api/package.json) ---
 - {type: Assignment, source: node-static-web-app, target: sys-nodejs-runtime, label: hosts}
-- {type: Serving, source: sys-nodejs-runtime, target: app-items-api, label: executes}
+- {type: Assignment, source: node-static-web-app, target: sys-azure-functions-worker, label: hosts}
+- {type: Serving, source: sys-nodejs-runtime, target: sys-azure-functions-worker, label: executes}
+- {type: Serving, source: sys-azure-functions-worker, target: app-items-api, label: "dispatches HTTP trigger"}
 - {type: Assignment, source: node-static-web-app, target: sys-mssql-driver, label: hosts}
 - {type: Serving, source: sys-mssql-driver, target: app-items-api, label: "provides SQL connectivity"}
 - {type: Association, source: sys-mssql-driver, target: comm-no-vnet-azure-network}

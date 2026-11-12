@@ -158,6 +158,15 @@
     client library getPool()/getItems() use to reach Azure SQL (see
     uml/structure/3-component.puml's "TDS (mssql)" interface).
 
+- type: SystemSoftware
+  id: sys-azure-functions-worker
+  name: "Azure Functions Worker (v4)"
+  desc: >-
+    npm `@azure/functions` package (api/package.json direct dependency,
+    v4 programming model per host.json "version": "2.0") — provides the
+    app.http() binding that routes incoming /api/items requests to the
+    Items API handler (api/src/functions/items.ts).
+
 # =====================================================================
 # Business — the people-facing use of the demo app
 # =====================================================================
