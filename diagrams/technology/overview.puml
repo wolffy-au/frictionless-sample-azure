@@ -21,7 +21,6 @@ Technology_CommunicationNetwork(e_id454e7b903b8357, "Internet")
 Rel_Association(e_id454e7b903b8357, e_id33cc192ee35e5b, "")
 Rel_Association(e_id5deb57760c7b5f, e_id76a7034dd9ab53, "")
 Rel_Access_w(e_id3b81282895f35e, e_id1ee4629338065d, "provisions app settings")
-Rel_Serving_Up(e_id76a7034dd9ab53, e_id4c5fc1cbb2f459, "TDS (Tabular Data Stream protocol)")
 Rel_Association(e_id4c5fc1cbb2f459, e_id5deb57760c7b5f, "")
 Rel_Access_r(e_id4c5fc1cbb2f459, e_id1ee4629338065d, "reads SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD")
 

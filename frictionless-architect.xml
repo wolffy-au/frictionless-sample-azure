@@ -286,9 +286,6 @@
     <relationship identifier="id-584dd195cf7f538ab9263f432f6e29a3" source="id-4c5fc1cbb2f4595abcc5c9849903200a" target="id-b9118a54ded651d7b8872524243f8f51" xsi:type="Serving">
       <name>provides SQL connectivity</name>
     </relationship>
-    <relationship identifier="id-3f6dec696c0d571ba6224e34e087b624" source="id-76a7034dd9ab5366a50d57edc1dced70" target="id-4c5fc1cbb2f4595abcc5c9849903200a" xsi:type="Serving">
-      <name>TDS (Tabular Data Stream protocol)</name>
-    </relationship>
     <relationship identifier="id-72e22ead7f80534a926df30d570c632a" source="id-4c5fc1cbb2f4595abcc5c9849903200a" target="id-5deb57760c7b5ff782805afdf0a52709" xsi:type="Association"/>
     <relationship identifier="id-c31345749e3a5a04a830651a1239df9d" source="id-4c5fc1cbb2f4595abcc5c9849903200a" target="id-1ee4629338065d2fafc10f0f4fd6becc" xsi:type="Access" accessType="Read">
       <name>reads SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD</name>
@@ -503,13 +500,6 @@
           </style>
         </connection>
         <connection identifier="id-57c33730f2325c89b4de872407d4e67b" relationshipRef="id-941ea71441155bdfb19bb4b34ae2b3cd" xsi:type="Relationship" source="id-8e068fb8dc2b5cb98bfb94790506713d" target="id-af292b84ae6d520fa49a85df3e6d898d">
-          <style lineWidth="1">
-            <font name="Segoe UI" size="9">
-              <color r="0" g="0" b="0"/>
-            </font>
-          </style>
-        </connection>
-        <connection identifier="id-1938cf71957c548899f3eebdfdf7dd7b" relationshipRef="id-3f6dec696c0d571ba6224e34e087b624" xsi:type="Relationship" source="id-757c722d0376526192f5b45c94a70c0c" target="id-af292b84ae6d520fa49a85df3e6d898d">
           <style lineWidth="1">
             <font name="Segoe UI" size="9">
               <color r="0" g="0" b="0"/>
@@ -854,7 +844,7 @@
             </font>
           </style>
         </node>
-        <node identifier="id-3a44082c714854adb1a2610a6c49a60d" elementRef="id-4c5fc1cbb2f4595abcc5c9849903200a" xsi:type="Element" x="1440" y="1680" w="100" h="80">
+        <node identifier="id-3a44082c714854adb1a2610a6c49a60d" elementRef="id-4c5fc1cbb2f4595abcc5c9849903200a" xsi:type="Element" x="1200" y="1680" w="100" h="80">
           <style>
             <font name="Arial" size="10">
               <color r="0" g="0" b="0"/>
@@ -1107,13 +1097,6 @@
           </style>
         </connection>
         <connection identifier="id-1f7856c553f15a569e7ea18c375f5863" relationshipRef="id-584dd195cf7f538ab9263f432f6e29a3" xsi:type="Relationship" source="id-3a44082c714854adb1a2610a6c49a60d" target="id-14da7de7af3e58b2adc02c13c5f028f0">
-          <style lineWidth="1">
-            <font name="Segoe UI" size="9">
-              <color r="0" g="0" b="0"/>
-            </font>
-          </style>
-        </connection>
-        <connection identifier="id-a36515182ea6592aad348e9e483148ff" relationshipRef="id-3f6dec696c0d571ba6224e34e087b624" xsi:type="Relationship" source="id-35e896ffb1045e279d94077f71a81653" target="id-3a44082c714854adb1a2610a6c49a60d">
           <style lineWidth="1">
             <font name="Segoe UI" size="9">
               <color r="0" g="0" b="0"/>

@@ -84,7 +84,6 @@
 - {type: Serving, source: sys-nodejs-runtime, target: app-items-api, label: executes}
 - {type: Assignment, source: node-static-web-app, target: sys-mssql-driver, label: hosts}
 - {type: Serving, source: sys-mssql-driver, target: app-items-api, label: "provides SQL connectivity"}
-- {type: Serving, source: int-sql-server, target: sys-mssql-driver, label: "TDS (Tabular Data Stream protocol)"}
 - {type: Association, source: sys-mssql-driver, target: comm-no-vnet-azure-network}
 
 - type: Access

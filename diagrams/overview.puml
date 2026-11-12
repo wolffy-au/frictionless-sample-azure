@@ -51,7 +51,6 @@ Rel_Association(e_id5deb57760c7b5f, e_id76a7034dd9ab53, "")
 Rel_Access_w(e_id3b81282895f35e, e_id1ee4629338065d, "provisions app settings")
 Rel_Serving_Up(e_id0d25a940b29254, e_idb9118a54ded651, "executes")
 Rel_Serving_Up(e_id4c5fc1cbb2f459, e_idb9118a54ded651, "provides SQL connectivity")
-Rel_Serving_Up(e_id76a7034dd9ab53, e_id4c5fc1cbb2f459, "TDS (Tabular Data Stream protocol)")
 Rel_Association(e_id4c5fc1cbb2f459, e_id5deb57760c7b5f, "")
 Rel_Access_r(e_id4c5fc1cbb2f459, e_id1ee4629338065d, "reads SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD")
 
