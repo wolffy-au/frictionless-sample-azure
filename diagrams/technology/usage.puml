@@ -25,8 +25,6 @@ Application_Component(e_idb9118a54ded651, "Items API") {
 }
 Application_Component(e_id859316e8097157, "Frontend")
 
-Rel_Association(e_id1ee4629338065d, e_idb9118a54ded651, "SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD app settings")
-Rel_Serving_Up(e_id30920e0c9a155d, e_idb9118a54ded651, "executes queries")
 Rel_Serving_Up(e_id3b81282895f35e, e_id859316e8097157, "serves static files")
 Rel_Realization_Up(e_id3db5d26be8ff56, e_id859316e8097157, "hosts")
 Rel_Realization_Up(e_id3db5d26be8ff56, e_idb9118a54ded651, "hosts")

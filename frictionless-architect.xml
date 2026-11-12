@@ -250,16 +250,10 @@
     <relationship identifier="id-a5fe0a06ab5153388d56b3682d80817b" source="id-3db5d26be8ff5636bce7ce69f352db3c" target="id-1ee4629338065d2fafc10f0f4fd6becc" xsi:type="Assignment">
       <name>hosts</name>
     </relationship>
-    <relationship identifier="id-5d8a52336da256e290240a797b2e7dfd" source="id-1ee4629338065d2fafc10f0f4fd6becc" target="id-b9118a54ded651d7b8872524243f8f51" xsi:type="Association">
-      <name>SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD app settings</name>
-    </relationship>
     <relationship identifier="id-7db6279a41b05e31a85d5a89667bb388" source="id-d447595fb73a5ff29894857ab28f8ffe" target="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Assignment"/>
     <relationship identifier="id-47eb0f8f822a505ea723fcd975e6fa4a" source="id-3db5d26be8ff5636bce7ce69f352db3c" target="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Assignment"/>
     <relationship identifier="id-51e5662bb2e6573b9f4e2f5000fba6ae" source="id-d447595fb73a5ff29894857ab28f8ffe" target="id-30920e0c9a155dedb6c97d07fefde16e" xsi:type="Assignment"/>
     <relationship identifier="id-2f40959555f8561d87c981226a1ac1cc" source="id-3db5d26be8ff5636bce7ce69f352db3c" target="id-3b81282895f35e30a238f6ed3dfeee13" xsi:type="Assignment"/>
-    <relationship identifier="id-a140fb8dfa0e5d6aaacd517916875d93" source="id-30920e0c9a155dedb6c97d07fefde16e" target="id-b9118a54ded651d7b8872524243f8f51" xsi:type="Serving">
-      <name>executes queries</name>
-    </relationship>
     <relationship identifier="id-73ea29947dea5d43a2346d0f9052ce36" source="id-3b81282895f35e30a238f6ed3dfeee13" target="id-859316e8097157ce823a81f45e5be19b" xsi:type="Serving">
       <name>serves static files</name>
     </relationship>
@@ -1109,13 +1103,6 @@
             </font>
           </style>
         </connection>
-        <connection identifier="id-54ac2b6616875727b16dc1006ac2ab3c" relationshipRef="id-5d8a52336da256e290240a797b2e7dfd" xsi:type="Relationship" source="id-88186512bc6d540ba70d7711da21d671" target="id-14da7de7af3e58b2adc02c13c5f028f0">
-          <style lineWidth="1">
-            <font name="Segoe UI" size="9">
-              <color r="0" g="0" b="0"/>
-            </font>
-          </style>
-        </connection>
         <connection identifier="id-df36f381f92a544aafb4236f6776880b" relationshipRef="id-7db6279a41b05e31a85d5a89667bb388" xsi:type="Relationship" source="id-461919b54f6858d8a9005807ef783074" target="id-35e896ffb1045e279d94077f71a81653">
           <style lineWidth="1">
             <font name="Segoe UI" size="9">
@@ -1138,13 +1125,6 @@
           </style>
         </connection>
         <connection identifier="id-d6e2a6f7f66454e1aa953059baaf0269" relationshipRef="id-2f40959555f8561d87c981226a1ac1cc" xsi:type="Relationship" source="id-a9d77c5268315f96af7235c35f01b626" target="id-31b44f773fa651a8be802e44955a9bf0">
-          <style lineWidth="1">
-            <font name="Segoe UI" size="9">
-              <color r="0" g="0" b="0"/>
-            </font>
-          </style>
-        </connection>
-        <connection identifier="id-1efb6bfcacab5704adc392f11a97e9cf" relationshipRef="id-a140fb8dfa0e5d6aaacd517916875d93" xsi:type="Relationship" source="id-1129a093d68955b2aa81592a9b9251ef" target="id-14da7de7af3e58b2adc02c13c5f028f0">
           <style lineWidth="1">
             <font name="Segoe UI" size="9">
               <color r="0" g="0" b="0"/>
@@ -1605,13 +1585,6 @@
             </font>
           </style>
         </connection>
-        <connection identifier="id-a07ed0e50284559283e18ba7cfe2ec6d" relationshipRef="id-5d8a52336da256e290240a797b2e7dfd" xsi:type="Relationship" source="id-2c4996b7c9ac56de992bd7c761dab1c0" target="id-aa1f0e7f63735c51b6e30594eb6f5453">
-          <style lineWidth="1">
-            <font name="Segoe UI" size="9">
-              <color r="0" g="0" b="0"/>
-            </font>
-          </style>
-        </connection>
         <connection identifier="id-6e26faa122da553285238d07efe830fc" relationshipRef="id-7db6279a41b05e31a85d5a89667bb388" xsi:type="Relationship" source="id-c3bb4bbf5caf5675a7665937983d6be6" target="id-e355e4595abf50658ece3ba4ba398ac7">
           <style lineWidth="1">
             <font name="Segoe UI" size="9">
@@ -1634,13 +1607,6 @@
           </style>
         </connection>
         <connection identifier="id-ea7e90c5eb18511b9b99c8a878286c94" relationshipRef="id-2f40959555f8561d87c981226a1ac1cc" xsi:type="Relationship" source="id-9c01ab72182b58d89c8a9f2ff41d9796" target="id-ef99ce87dec352ebbce505cfc35f8073">
-          <style lineWidth="1">
-            <font name="Segoe UI" size="9">
-              <color r="0" g="0" b="0"/>
-            </font>
-          </style>
-        </connection>
-        <connection identifier="id-52618ba85b525ae0a3c785202948a049" relationshipRef="id-a140fb8dfa0e5d6aaacd517916875d93" xsi:type="Relationship" source="id-0072fdcb878b5034a2992285245c6617" target="id-aa1f0e7f63735c51b6e30594eb6f5453">
           <style lineWidth="1">
             <font name="Segoe UI" size="9">
               <color r="0" g="0" b="0"/>
