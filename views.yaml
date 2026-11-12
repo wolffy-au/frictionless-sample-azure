@@ -66,6 +66,23 @@
   no_direction: [Flow, Triggering]
   max_width: 3800
 
+- id: view-sample-azure-information-structure
+  name: "Information Structure"
+  # Generic Information Structure viewpoint (ArchiMate 3.2 §14): the
+  # structure of the information used by this app — business objects, how
+  # they are represented, the data objects that realise them, and the
+  # artifacts that persist those. Swept by type, not members, so a newly
+  # added element of any of these types appears here automatically.
+  viewpoint: information_structure
+  diagram: business/information-structure
+  include_types:
+    - BusinessObject
+    - Representation
+    - DataObject
+    - Artifact
+    - Meaning
+  max_width: 3800
+
 - id: view-sample-azure-everything
   name: "Everything: sample-azure"
   # Deliberately viewpoint: custom — this spans all three layers (Business,

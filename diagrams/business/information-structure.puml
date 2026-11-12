@@ -1,0 +1,17 @@
+@startuml
+!include <archimate/Archimate>
+
+scale max 3800 width
+title Information Structure
+
+Technology_Artifact(e_idf0ecd6fb3b8b5b, "appdb")
+Technology_Artifact(e_id1ee4629338065d, "Database Config")
+Application_DataObject(e_id032efff5924e5e, "DemoItems")
+Business_Object(e_id32456a57134d5f, "Demo Item")
+Business_Representation(e_idbd4055139c8656, "Demo Items Table")
+
+Rel_Realization_Up(e_idf0ecd6fb3b8b5b, e_id032efff5924e5e, "")
+Rel_Realization_Up(e_id032efff5924e5e, e_id32456a57134d5f, "realizes")
+Rel_Realization_Up(e_idbd4055139c8656, e_id32456a57134d5f, "realizes")
+
+@enduml

@@ -852,6 +852,65 @@
           </style>
         </connection>
       </view>
+      <view identifier="id-78e765fa7683501e8305c9cdfeec777e" xsi:type="Diagram">
+        <name>Information Structure</name>
+        <node identifier="id-c715c5b4a6425fe1a7620be211abc8b9" elementRef="id-f0ecd6fb3b8b5bb69f24b39169314ce4" xsi:type="Element" x="0" y="960" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-a98db2bd77cf517ebdcdcae149d57728" elementRef="id-1ee4629338065d2fafc10f0f4fd6becc" xsi:type="Element" x="240" y="960" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-89306341b7ab558ebf79ff44e603defb" elementRef="id-032efff5924e5ef3b57593ad5595b7df" xsi:type="Element" x="0" y="480" w="80" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-8b5e1003a2ef5635871b6768c6cce388" elementRef="id-32456a57134d5fa9b092f1354f77a34d" xsi:type="Element" x="0" y="0" w="80" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <node identifier="id-3d32e11cf3c65422b592839800dc29cd" elementRef="id-bd4055139c86568ba89ecceebd162acb" xsi:type="Element" x="480" y="960" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
+        <connection identifier="id-40071e7bdc0f58bfa0a877135a41ff58" relationshipRef="id-db7b0346a7d05b0aa26ffaf1a80287b6" xsi:type="Relationship" source="id-c715c5b4a6425fe1a7620be211abc8b9" target="id-89306341b7ab558ebf79ff44e603defb">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-490ffd8a52675ba3b51c9b9f3d33df8a" relationshipRef="id-92e0e9d246295af1a9dc8e4582388b9a" xsi:type="Relationship" source="id-89306341b7ab558ebf79ff44e603defb" target="id-8b5e1003a2ef5635871b6768c6cce388">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-abfefcd67fd15052b485cfd07bcf78d0" relationshipRef="id-7cb4e1e22cc051b7a0b0d583666a8200" xsi:type="Relationship" source="id-3d32e11cf3c65422b592839800dc29cd" target="id-8b5e1003a2ef5635871b6768c6cce388">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+      </view>
       <view identifier="id-61719395ae7c5015a37fc5aba3f7b6d5" xsi:type="Diagram">
         <name>Everything: sample-azure</name>
         <node identifier="id-a9d77c5268315f96af7235c35f01b626" elementRef="id-3db5d26be8ff5636bce7ce69f352db3c" xsi:type="Element" x="0" y="1200" w="100" h="80">
