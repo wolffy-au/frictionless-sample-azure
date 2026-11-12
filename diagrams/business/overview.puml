@@ -7,7 +7,11 @@ Business_Actor(e_id40e6f8deb4f45c, "Visitor") {
   Business_Process(e_ida6f500d9395851, "View Demo Items")
 }
 Business_Interface(e_id66a63993dfde51, "Website")
+Business_Object(e_id32456a57134d5f, "Demo Item")
+Business_Representation(e_idbd4055139c8656, "Demo Items Table")
 
 Rel_Serving_Up(e_id66a63993dfde51, e_id40e6f8deb4f45c, "provides access for")
+Rel_Realization_Up(e_idbd4055139c8656, e_id32456a57134d5f, "realizes")
+Rel_Access_r(e_ida6f500d9395851, e_idbd4055139c8656, "reads")
 
 @enduml

@@ -66,6 +66,14 @@
 - {type: Realization, source: app-read-demo-items, target: biz-view-demo-items}
 - {type: Composition, source: app-frontend, target: int-frontend, label: exposes}
 - {type: Serving, source: int-frontend, target: biz-website, label: provides access for}
+- {type: Realization, source: do-demo-items, target: bo-demo-item, label: realizes}
+- {type: Realization, source: rep-demo-items-table, target: bo-demo-item, label: realizes}
+- type: Access
+  source: biz-view-demo-items
+  target: rep-demo-items-table
+  label: reads
+  props:
+    access_type: Read
 
 # --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
 - {type: Association, source: comm-internet, target: int-web-app}

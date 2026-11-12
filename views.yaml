@@ -35,6 +35,7 @@
     - BusinessEvent
     - BusinessService
     - BusinessObject
+    - Representation
 
 - id: view-sample-azure-process-cooperation
   name: Business Process Cooperation
@@ -78,6 +79,8 @@
     - BusinessActor
     - BusinessProcess
     - BusinessInterface
+    - BusinessObject
+    - Representation
     - ApplicationComponent
     - ApplicationInterface
     - ApplicationProcess

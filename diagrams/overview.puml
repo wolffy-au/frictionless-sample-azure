@@ -32,6 +32,8 @@ Business_Actor(e_id40e6f8deb4f45c, "Visitor") {
   Business_Process(e_ida6f500d9395851, "View Demo Items")
 }
 Business_Interface(e_id66a63993dfde51, "Website")
+Business_Object(e_id32456a57134d5f, "Demo Item")
+Business_Representation(e_idbd4055139c8656, "Demo Items Table")
 
 Rel_Realization_Up(e_idf0ecd6fb3b8b5b, e_id032efff5924e5e, "")
 Rel_Association(e_id1ee4629338065d, e_idb9118a54ded651, "SQL_SERVER / SQL_DATABASE / SQL_USER / SQL_PASSWORD app settings")
@@ -47,6 +49,9 @@ Rel_Serving_Up(e_id66a63993dfde51, e_id40e6f8deb4f45c, "provides access for")
 Rel_Realization_Up(e_id859316e8097157, e_id66a63993dfde51, "")
 Rel_Realization_Up(e_idf9a91550500455, e_ida6f500d9395851, "")
 Rel_Serving_Up(e_idd8a8c6ca248e52, e_id66a63993dfde51, "provides access for")
+Rel_Realization_Up(e_id032efff5924e5e, e_id32456a57134d5f, "realizes")
+Rel_Realization_Up(e_idbd4055139c8656, e_id32456a57134d5f, "realizes")
+Rel_Access_r(e_ida6f500d9395851, e_idbd4055139c8656, "reads")
 Rel_Association(e_id454e7b903b8357, e_id33cc192ee35e5b, "")
 Rel_Association(e_id5deb57760c7b5f, e_id76a7034dd9ab53, "")
 Rel_Access_w(e_id3b81282895f35e, e_id1ee4629338065d, "provisions app settings")

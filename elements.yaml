@@ -189,4 +189,20 @@
   name: Website
   desc: The public URL/browser channel through which the Visitor reaches the app.
 
+- type: BusinessObject
+  id: bo-demo-item
+  name: Demo Item
+  desc: >-
+    The business concept of an inventory item (Id, Name, Category) the
+    Visitor views — the business-relevant counterpart of the dbo.DemoItems
+    table (do-demo-items).
+
+- type: Representation
+  id: rep-demo-items-table
+  name: Demo Items Table
+  desc: >-
+    The rendered <table id="items"> in public/index.html, populated by
+    app.js's loadItems() — the perceptible form of Demo Item the Visitor
+    actually reads.
+
 - {type: ApplicationInterface, id: int-frontend, name: Frontend Interface, desc: HTTP interface exposed by the Frontend component for the Visitor to interact with.}
