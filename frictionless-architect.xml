@@ -72,7 +72,7 @@
     </element>
     <element identifier="id-859316e8097157ce823a81f45e5be19b" xsi:type="ApplicationComponent">
       <name>Frontend</name>
-      <documentation>Static browser app (public/index.html, public/app.js). Calls GET /api/items on page load and renders the returned DemoItem rows.</documentation>
+      <documentation>Static browser app (public/index.html, public/app.js). Calls GET /api/items on page load and renders the returned DemoItem rows; separately fetches the static /version.json (written by deploy.sh, not the Items API) to show a build version/timestamp in the footer.</documentation>
       <properties>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>

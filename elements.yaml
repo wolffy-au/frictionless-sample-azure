@@ -85,7 +85,9 @@
   name: Frontend
   desc: >-
     Static browser app (public/index.html, public/app.js). Calls GET /api/items
-    on page load and renders the returned DemoItem rows.
+    on page load and renders the returned DemoItem rows; separately fetches
+    the static /version.json (written by deploy.sh, not the Items API) to
+    show a build version/timestamp in the footer.
 
 - type: ApplicationInterface
   id: int-items-api
