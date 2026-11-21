@@ -84,10 +84,10 @@
   id: app-frontend
   name: Frontend
   desc: >-
-    Static browser app (public/index.html, public/app.js). Calls GET /api/items
-    on page load and renders the returned DemoItem rows; separately fetches
-    the static /version.json (written by deploy.sh, not the Items API) to
-    show a build version/timestamp in the footer.
+    Static browser app (public/index.html, public/app.js). Loads the demo
+    items on page load and renders the returned DemoItem rows; separately
+    fetches the static /version.json (written by deploy.sh) to show a build
+    version/timestamp in the footer.
 
 - type: ApplicationInterface
   id: int-items-api
@@ -98,18 +98,25 @@
   id: app-init-demo-data
   name: Initialize Demo Data
   desc: >-
-    First-request setup inside getItems(): sp_getapplock, CREATE TABLE
-    dbo.DemoItems if missing, INSERT 3 seed rows if empty.
+    First-use setup: creates the demo item store if it doesn't exist yet and
+    inserts the three seed items if it is empty, guarded so concurrent first
+    loads seed only once.
+  props:
+    implementation: "getItems(): sp_getapplock, CREATE TABLE dbo.DemoItems if missing, INSERT 3 seed rows if empty"
 
 - type: ApplicationProcess
   id: app-read-demo-items
   name: Read Demo Items
-  desc: "SELECT Id, Name, Category FROM dbo.DemoItems ORDER BY Id, run every request after initialization."
+  desc: Reads all demo items ordered by Id, on every page load.
+  props:
+    implementation: "getItems(): SELECT Id, Name, Category FROM dbo.DemoItems ORDER BY Id"
 
 - type: DataObject
   id: do-demo-items
   name: DemoItems
-  desc: dbo.DemoItems table — created and seeded by the Items API on first request.
+  desc: The stored demo items — created and seeded on first use by Initialize Demo Data (app-init-demo-data).
+  props:
+    storage: "dbo.DemoItems table (appdb)"
 
 # --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
 - type: TechnologyInterface
@@ -125,7 +132,7 @@
     firewall-rule: "AllowAzureServices (0.0.0.0-0.0.0.0)"
     min-tls-version: "1.2"
 
-- {type: TechnologyInterface, id: int-web-app, name: Web App Interface, desc: Interface exposed by the Static Web App for external communication.}
+- {type: TechnologyInterface, id: int-web-app, name: Web App Interface, desc: Interface exposed by the web hosting node for external communication.}
 
 # --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
 - type: SystemSoftware
@@ -175,7 +182,7 @@
 - type: BusinessActor
   id: biz-visitor
   name: Visitor
-  desc: End user browsing the deployed Static Web App (8-use-case.puml).
+  desc: End user browsing the deployed web app (8-use-case.puml).
 
 - type: BusinessProcess
   id: biz-view-demo-items
@@ -194,8 +201,8 @@
   name: Demo Item
   desc: >-
     The business concept of an inventory item (Id, Name, Category) the
-    Visitor views — the business-relevant counterpart of the dbo.DemoItems
-    table (do-demo-items).
+    Visitor views — the business-relevant counterpart of the stored demo
+    items (do-demo-items).
 
 - type: Representation
   id: rep-demo-items-table

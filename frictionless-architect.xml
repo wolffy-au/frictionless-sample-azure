@@ -72,7 +72,7 @@
     </element>
     <element identifier="id-859316e8097157ce823a81f45e5be19b" xsi:type="ApplicationComponent">
       <name>Frontend</name>
-      <documentation>Static browser app (public/index.html, public/app.js). Calls GET /api/items on page load and renders the returned DemoItem rows; separately fetches the static /version.json (written by deploy.sh, not the Items API) to show a build version/timestamp in the footer.</documentation>
+      <documentation>Static browser app (public/index.html, public/app.js). Loads the demo items on page load and renders the returned DemoItem rows; separately fetches the static /version.json (written by deploy.sh) to show a build version/timestamp in the footer.</documentation>
       <properties>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
@@ -90,8 +90,11 @@
     </element>
     <element identifier="id-9e4601a2031c58ac9b6893c386b72342" xsi:type="ApplicationProcess">
       <name>Initialize Demo Data</name>
-      <documentation>First-request setup inside getItems(): sp_getapplock, CREATE TABLE dbo.DemoItems if missing, INSERT 3 seed rows if empty.</documentation>
+      <documentation>First-use setup: creates the demo item store if it doesn't exist yet and inserts the three seed items if it is empty, guarded so concurrent first loads seed only once.</documentation>
       <properties>
+        <property propertyDefinitionRef="propid-3">
+          <value>getItems(): sp_getapplock, CREATE TABLE dbo.DemoItems if missing, INSERT 3 seed rows if empty</value>
+        </property>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
         </property>
@@ -99,8 +102,11 @@
     </element>
     <element identifier="id-f9a915505004556f83d517e573efdf8e" xsi:type="ApplicationProcess">
       <name>Read Demo Items</name>
-      <documentation>SELECT Id, Name, Category FROM dbo.DemoItems ORDER BY Id, run every request after initialization.</documentation>
+      <documentation>Reads all demo items ordered by Id, on every page load.</documentation>
       <properties>
+        <property propertyDefinitionRef="propid-3">
+          <value>getItems(): SELECT Id, Name, Category FROM dbo.DemoItems ORDER BY Id</value>
+        </property>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
         </property>
@@ -108,8 +114,11 @@
     </element>
     <element identifier="id-032efff5924e5ef3b57593ad5595b7df" xsi:type="DataObject">
       <name>DemoItems</name>
-      <documentation>dbo.DemoItems table — created and seeded by the Items API on first request.</documentation>
+      <documentation>The stored demo items — created and seeded on first use by Initialize Demo Data (app-init-demo-data).</documentation>
       <properties>
+        <property propertyDefinitionRef="propid-4">
+          <value>dbo.DemoItems table (appdb)</value>
+        </property>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
         </property>
@@ -119,13 +128,13 @@
       <name>SQL Server Interface</name>
       <documentation>Interface exposed by Azure SQL Server for external communication — speaks TDS (Tabular Data Stream), the wire protocol Microsoft SQL Server and its client drivers (sys-mssql-driver) use to exchange queries and results.</documentation>
       <properties>
-        <property propertyDefinitionRef="propid-3">
+        <property propertyDefinitionRef="propid-5">
           <value>Enabled</value>
         </property>
-        <property propertyDefinitionRef="propid-4">
+        <property propertyDefinitionRef="propid-6">
           <value>AllowAzureServices (0.0.0.0-0.0.0.0)</value>
         </property>
-        <property propertyDefinitionRef="propid-5">
+        <property propertyDefinitionRef="propid-7">
           <value>1.2</value>
         </property>
         <property propertyDefinitionRef="propid-2">
@@ -135,7 +144,7 @@
     </element>
     <element identifier="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="TechnologyInterface">
       <name>Web App Interface</name>
-      <documentation>Interface exposed by the Static Web App for external communication.</documentation>
+      <documentation>Interface exposed by the web hosting node for external communication.</documentation>
       <properties>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
@@ -189,7 +198,7 @@
     </element>
     <element identifier="id-40e6f8deb4f45ccab3fc62c7675097b6" xsi:type="BusinessActor">
       <name>Visitor</name>
-      <documentation>End user browsing the deployed Static Web App (8-use-case.puml).</documentation>
+      <documentation>End user browsing the deployed web app (8-use-case.puml).</documentation>
       <properties>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
@@ -216,7 +225,7 @@
     </element>
     <element identifier="id-32456a57134d5fa9b092f1354f77a34d" xsi:type="BusinessObject">
       <name>Demo Item</name>
-      <documentation>The business concept of an inventory item (Id, Name, Category) the Visitor views — the business-relevant counterpart of the dbo.DemoItems table (do-demo-items).</documentation>
+      <documentation>The business concept of an inventory item (Id, Name, Category) the Visitor views — the business-relevant counterpart of the stored demo items (do-demo-items).</documentation>
       <properties>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
@@ -371,12 +380,18 @@
       <name>context</name>
     </propertyDefinition>
     <propertyDefinition identifier="propid-3" type="string">
-      <name>public-network-access</name>
+      <name>implementation</name>
     </propertyDefinition>
     <propertyDefinition identifier="propid-4" type="string">
-      <name>firewall-rule</name>
+      <name>storage</name>
     </propertyDefinition>
     <propertyDefinition identifier="propid-5" type="string">
+      <name>public-network-access</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="propid-6" type="string">
+      <name>firewall-rule</name>
+    </propertyDefinition>
+    <propertyDefinition identifier="propid-7" type="string">
       <name>min-tls-version</name>
     </propertyDefinition>
   </propertyDefinitions>
