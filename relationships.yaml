@@ -52,7 +52,7 @@
 - type: Access
   source: app-read-demo-items
   target: do-demo-items
-  label: select
+  label: read
   props:
     access_type: Read
 
