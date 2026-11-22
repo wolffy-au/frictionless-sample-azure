@@ -18,7 +18,7 @@ object "item3 : DemoItem" as item3 {
 }
 
 note bottom
-  Hardcoded seed values inserted by getItems()
+  Hardcoded seed values inserted by initItems()
   the first time dbo.DemoItems is found empty
   (api/src/functions/items.ts).
 end note

@@ -8,7 +8,11 @@ repeat
     :ref: Establish SQL connection pool\n(getPool() -> new ConnectionPool().connect(),\nconnectionTimeout 30000);
   else (yes)
   endif
-  :ref: Execute getItems() SQL batch\n(see 9-activity.puml: lock, create, seed, select);
+  :ref: Read demo items\n(readItems(): select if table exists);
+  if (Table missing or empty?\n(first request)) then (yes)
+    :ref: Initialize demo data, then read again\n(see 9-activity.puml: lock, create, seed, re-read);
+  else (no)
+  endif
   if (Exception thrown?) then (yes)
     if (Database waking up?\n(40613, or ETIMEOUT / ESOCKET while connecting)) then (yes)
       :ref: Return 503 response\n(Retry-After: 10, jsonBody.retryable: true);

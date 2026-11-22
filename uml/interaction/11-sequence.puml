@@ -41,10 +41,17 @@ end
 GetPool --> GetItems : pool
 deactivate GetPool
 
-GetItems -> Sql : pool.request().batch(\n  sp_getapplock, CREATE TABLE IF missing,\n  INSERT seed IF empty, SELECT ORDER BY Id)
+GetItems -> Sql : readItems(): batch(\n  SELECT ORDER BY Id IF table exists)
 activate Sql
 
-alt lock/DDL/select succeed
+alt table missing or empty (first request)
+  GetItems -> Sql : initItems(): batch(\n  sp_getapplock, CREATE TABLE IF missing,\n  INSERT seed IF empty)
+  GetItems -> Sql : readItems() again
+else table already seeded
+  GetItems -> GetItems : use first result
+end
+
+alt reads/lock/DDL succeed
   Sql --> GetItems : recordset (DemoItem[])
   GetItems --> Handler : DemoItem[]
   Handler --> LoadItems : 200, jsonBody: DemoItem[]

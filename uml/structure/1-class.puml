@@ -9,7 +9,7 @@ class DemoItem <<table>> {
 
 note right of DemoItem
   Schema is defined inline as CREATE TABLE DDL
-  in api/src/functions/items.ts (getItems()),
+  in api/src/functions/items.ts (initItems()),
   not tracked as a separate migration.
 end note
 

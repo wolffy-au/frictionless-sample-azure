@@ -11,7 +11,8 @@ Browser --> ItemsAPI : 1: GET /api/items
 ItemsAPI --> GetItems : 1.1: getItems()
 GetItems --> GetPool : 1.1.1: getPool()
 GetPool --> Sql : 1.1.1.1: connect()\n[poolPromise undefined]
-GetItems --> Sql : 1.1.2: batch(lock, create, seed, select)
-ItemsAPI --> Browser : 2: 200 OK, jsonBody: DemoItem[]\n(or 503 + Retry-After while the database wakes up, items.ts:131-137,\nor 500 on other errors, items.ts:140-144)
+GetItems --> Sql : 1.1.2: readItems(): batch(select if table exists)
+GetItems --> Sql : 1.1.3: initItems(): batch(lock, create, seed),\nthen readItems() again\n[table missing or empty]
+ItemsAPI --> Browser : 2: 200 OK, jsonBody: DemoItem[]\n(or 503 + Retry-After while the database wakes up, items.ts:151-157,\nor 500 on other errors, items.ts:160-164)
 
 @enduml
