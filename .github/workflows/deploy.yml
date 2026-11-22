@@ -1,10 +1,12 @@
-# Deploys sample-azure when a version tag (v*) is pushed, by running deploy.sh.
+# Deploys sample-azure when a version tag (v*) is pushed, or on demand from
+# the Actions tab (Run workflow) to test a branch first, by running deploy.sh.
 # One-time setup (identity, permissions, GitHub settings): setup-github-deploy.sh.
 name: Deploy
 
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch: # Run workflow: deploy the chosen branch to production
 
 permissions:
   contents: read
@@ -20,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - name: Check out the tagged commit
+      - name: Check out the commit
         uses: actions/checkout@v7
         with:
           fetch-depth: 0 # git describe needs the history and tags

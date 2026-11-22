@@ -59,6 +59,12 @@ git tag v1.2.3
 git push origin v1.2.3
 ```
 
+To test a branch before tagging it, run the workflow by hand: **Actions** >
+**Deploy** > **Run workflow** on GitHub, or
+`gh workflow run deploy.yml --ref <branch>`.
+This also deploys to production; the page footer then shows the untagged build
+version, for example `v1.0.0-3-gabad415`.
+
 The workflow (`.github/workflows/deploy.yml`) runs `deploy.sh` in the
 repository's `production` environment. It signs in to Azure through a federated
 credential (OpenID Connect), so no Azure secret or key is stored in GitHub.
