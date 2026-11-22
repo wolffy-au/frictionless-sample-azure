@@ -10,6 +10,10 @@
 # Requires az and gh, both signed in. Safe to re-run.
 set -euo pipefail
 
+# Git Bash on Windows rewrites arguments that start with "/" into Windows
+# paths, which breaks resource IDs such as /subscriptions/...; keep them as-is.
+export MSYS_NO_PATHCONV=1
+
 cd "$(dirname "$0")"
 
 ENV_FILE=".env"
