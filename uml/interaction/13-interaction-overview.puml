@@ -2,18 +2,28 @@
 title Interaction overview: GET /api/items request handling
 
 start
-:ref: Browser sends GET /api/items\n(see 11-sequence.puml);
-if (Connection pool cached?\n(poolPromise already set)) then (no)
-  :ref: Establish SQL connection pool\n(getPool() -> new ConnectionPool().connect());
-else (yes)
-endif
-:ref: Execute getItems() SQL batch\n(see 9-activity.puml: lock, create, seed, select);
-if (Exception thrown?) then (yes)
-  :ref: Return 500 error response\n(context.error + jsonBody.error);
-  stop
-else (no)
-  :ref: Return 200 JSON response\n(jsonBody: DemoItem[]);
-  stop
-endif
+repeat
+  :ref: Browser sends GET /api/items\n(see 11-sequence.puml);
+  if (Connection pool cached?\n(poolPromise already set)) then (no)
+    :ref: Establish SQL connection pool\n(getPool() -> new ConnectionPool().connect(),\nconnectionTimeout 30000);
+  else (yes)
+  endif
+  :ref: Execute getItems() SQL batch\n(see 9-activity.puml: lock, create, seed, select);
+  if (Exception thrown?) then (yes)
+    if (Database waking up?\n(40613, or ETIMEOUT / ESOCKET while connecting)) then (yes)
+      :ref: Return 503 response\n(Retry-After: 10, jsonBody.retryable: true);
+      :ref: Page shows "Waking the database..."\nand waits Retry-After seconds;
+    else (no)
+      :ref: Return 500 error response\n(context.error + jsonBody.error);
+      stop
+    endif
+  else (no)
+    :ref: Return 200 JSON response\n(jsonBody: DemoItem[]);
+    stop
+  endif
+repeat while (Under ~2 minutes since the first request?) is (yes)
+->no;
+:ref: Page shows the error\n("Unable to load demo items...");
+stop
 
 @enduml

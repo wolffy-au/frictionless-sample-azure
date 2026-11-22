@@ -2,12 +2,17 @@
 title Sequence: GET /api/items
 
 actor Browser as Browser
+participant "loadItems()\n(app.js)" as LoadItems
 participant "handleItems()" as Handler
 participant "getItems()" as GetItems
 participant "getPool()" as GetPool
 database "Azure SQL\n(appdb)" as Sql
 
-Browser -> Handler : GET /api/items
+Browser -> LoadItems : page load
+activate LoadItems
+
+loop while the response is a retryable 503, for up to ~2 minutes
+LoadItems -> Handler : GET /api/items
 activate Handler
 
 Handler -> GetItems : await getItems()
@@ -17,8 +22,19 @@ GetItems -> GetPool : await getPool()
 activate GetPool
 
 alt poolPromise undefined (cold start)
-  GetPool -> Sql : new ConnectionPool(...).connect()
-  Sql --> GetPool : connected pool
+  GetPool -> Sql : new ConnectionPool({connectionTimeout: 30000})\n.connect()
+  alt database active
+    Sql --> GetPool : connected pool
+  else database auto-paused (the connection attempt triggers the resume)
+    Sql --> GetPool : throw 40613 "not currently available" (ELOGIN)\nor ETIMEOUT / ESOCKET
+    GetPool -> GetPool : poolPromise = undefined
+    GetPool --> GetItems : rejected promise
+    GetItems --> Handler : rejected promise
+    Handler -> Handler : isDatabaseWakingUp(error)
+    Handler --> LoadItems : 503, Retry-After: 10,\njsonBody: {error: "The database is waking up. Retrying...",\nretryable: true}
+    LoadItems -> Browser : set #status to "Waking the database\n(this can take up to a minute)..."
+    LoadItems -> LoadItems : wait Retry-After seconds, then retry
+  end
 else poolPromise cached
   GetPool -> GetPool : return cached poolPromise
 end
@@ -31,15 +47,27 @@ activate Sql
 alt lock/DDL/select succeed
   Sql --> GetItems : recordset (DemoItem[])
   GetItems --> Handler : DemoItem[]
-  Handler --> Browser : 200, jsonBody: DemoItem[]
-else exception thrown
+  Handler --> LoadItems : 200, jsonBody: DemoItem[]
+  LoadItems -> Browser : render rows
+else 40613 raised by the query
+  Sql --> GetItems : throw (number 40613)
+  GetItems --> Handler : rejected promise
+  Handler --> LoadItems : 503, Retry-After: 10 (as above)
+else other exception thrown
   Sql --> GetItems : throw (lock timeout / SQL error)
   GetItems --> Handler : rejected promise
   Handler -> Handler : context.error(\n  "Unable to load demo items...")
-  Handler --> Browser : 500,\njsonBody: {error: "Unable to load demo items.\nCheck the API logs for details."}
+  Handler --> LoadItems : 500,\njsonBody: {error: "Unable to load demo items.\nCheck the API logs for details."}
+  LoadItems -> Browser : show the error in #status
 end
 deactivate Sql
 deactivate GetItems
 deactivate Handler
+end
+
+opt still a retryable 503 after ~2 minutes
+  LoadItems -> Browser : set #status to "Unable to load demo items.\nCheck the API logs for details."
+end
+deactivate LoadItems
 
 @enduml

@@ -12,6 +12,6 @@ ItemsAPI --> GetItems : 1.1: getItems()
 GetItems --> GetPool : 1.1.1: getPool()
 GetPool --> Sql : 1.1.1.1: connect()\n[poolPromise undefined]
 GetItems --> Sql : 1.1.2: batch(lock, create, seed, select)
-ItemsAPI --> Browser : 2: 200 OK, jsonBody: DemoItem[]\n(or 500 on error, items.ts:95-100)
+ItemsAPI --> Browser : 2: 200 OK, jsonBody: DemoItem[]\n(or 503 + Retry-After while the database wakes up, items.ts:131-137,\nor 500 on other errors, items.ts:140-144)
 
 @enduml

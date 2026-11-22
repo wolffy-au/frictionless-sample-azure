@@ -69,6 +69,11 @@ The SQL free tier pauses the database for the rest of the month when its free
 compute limit is reached. The API will be unable to serve data until the free
 allowance resets.
 
+The serverless database also pauses itself after an hour without connections,
+and the next request takes up to a minute to resume it. Meanwhile the API
+answers 503 with `Retry-After: 10`, and the page shows "Waking the database"
+and retries for up to two minutes, so the first load succeeds without a reload.
+
 ## License
 
 Copyright (C) 2026 Stephan Borg
