@@ -75,6 +75,8 @@
 # --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
 - {type: Association, source: comm-internet, target: int-web-app}
 - {type: Association, source: comm-no-vnet-azure-network, target: int-sql-server}
+- {type: Association, source: comm-internet, target: node-visitor-browser}
+- {type: Serving, source: int-web-app, target: node-visitor-browser, label: "public/ + /api/items over HTTPS"}
 
 # --- Conversational authoring: applied via POST /authoring/.../decide (GH #108) ---
 - type: Access

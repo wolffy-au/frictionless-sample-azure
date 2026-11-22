@@ -15,7 +15,16 @@
     </element>
     <element identifier="id-d447595fb73a5ff29894857ab28f8ffe" xsi:type="Node">
       <name>Azure SQL Server</name>
-      <documentation>Azure SQL Server (Microsoft.Sql/servers) — logical server hosting the appdb database and the Database Engine that executes its queries.</documentation>
+      <documentation>Azure SQL Server (Microsoft.Sql/servers) â€” logical server hosting the appdb database and the Database Engine that executes its queries.</documentation>
+      <properties>
+        <property propertyDefinitionRef="propid-2">
+          <value>platform</value>
+        </property>
+      </properties>
+    </element>
+    <element identifier="id-9f19149e10f45ed6963d7945c81159bf" xsi:type="Node">
+      <name>Visitor's Browser</name>
+      <documentation>The Visitor's web browser and the machine it runs on â€” where the Frontend executes. Runs no third-party technology: it loads public/ and calls /api/items, and all server-side technology is in the Static Web App node.</documentation>
       <properties>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
@@ -36,7 +45,7 @@
     </element>
     <element identifier="id-1ee4629338065d2fafc10f0f4fd6becc" xsi:type="Artifact">
       <name>Database Config</name>
-      <documentation>Microsoft.Web/staticSites/config "appsettings" (main.bicep staticSiteAppSettings) — SQL_SERVER, SQL_DATABASE, SQL_USER, SQL_PASSWORD read by the Items API at runtime.</documentation>
+      <documentation>Microsoft.Web/staticSites/config "appsettings" (main.bicep staticSiteAppSettings) â€” SQL_SERVER, SQL_DATABASE, SQL_USER, SQL_PASSWORD read by the Items API at runtime.</documentation>
       <properties>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
@@ -45,7 +54,7 @@
     </element>
     <element identifier="id-5deb57760c7b5ff782805afdf0a52709" xsi:type="CommunicationNetwork">
       <name>No-VNet Azure Network</name>
-      <documentation>Neither side has VNet integration or Private Link, so the Static Web App's egress to SQL (no VNet option on Free tier) and the SQL Server's public endpoint (publicNetworkAccess: Enabled) share this unisolated network plane. Not the open internet: access is additionally gated by the AllowAzureServices firewall rule, which admits any Azure tenant's services, not arbitrary internet hosts. (The specific access-control values live as props on SQL Server Interface below — they're that interface's gating policy, not an intrinsic property of this network.)</documentation>
+      <documentation>Neither side has VNet integration or Private Link, so the Static Web App's egress to SQL (no VNet option on Free tier) and the SQL Server's public endpoint (publicNetworkAccess: Enabled) share this unisolated network plane. Not the open internet: access is additionally gated by the AllowAzureServices firewall rule, which admits any Azure tenant's services, not arbitrary internet hosts. (The specific access-control values live as props on SQL Server Interface below â€” they're that interface's gating policy, not an intrinsic property of this network.)</documentation>
       <properties>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
@@ -54,7 +63,7 @@
     </element>
     <element identifier="id-454e7b903b83570699490736727db0f5" xsi:type="CommunicationNetwork">
       <name>Internet</name>
-      <documentation>The genuinely open internet: unlike the no-VNet Azure network above, there's no firewall rule or Azure-tenant scoping here — any browser, anywhere, can reach the Static Web App's public HTTPS endpoint (Free tier has no private-endpoint option). This is the Visitor's ingress path, and the Static Web App's only direct egress/ingress boundary to the public internet as opposed to Azure's own network.</documentation>
+      <documentation>The genuinely open internet: unlike the no-VNet Azure network above, there's no firewall rule or Azure-tenant scoping here â€” any browser, anywhere, can reach the Static Web App's public HTTPS endpoint (Free tier has no private-endpoint option). This is the Visitor's ingress path, and the Static Web App's only direct egress/ingress boundary to the public internet as opposed to Azure's own network.</documentation>
       <properties>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
@@ -114,7 +123,7 @@
     </element>
     <element identifier="id-032efff5924e5ef3b57593ad5595b7df" xsi:type="DataObject">
       <name>DemoItems</name>
-      <documentation>The stored demo items — created and seeded on first use by Initialize Demo Data (app-init-demo-data).</documentation>
+      <documentation>The stored demo items â€” created and seeded on first use by Initialize Demo Data (app-init-demo-data).</documentation>
       <properties>
         <property propertyDefinitionRef="propid-4">
           <value>dbo.DemoItems table (appdb)</value>
@@ -126,7 +135,7 @@
     </element>
     <element identifier="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="TechnologyInterface">
       <name>SQL Server Interface</name>
-      <documentation>Interface exposed by Azure SQL Server for external communication — speaks TDS (Tabular Data Stream), the wire protocol Microsoft SQL Server and its client drivers (sys-mssql-driver) use to exchange queries and results.</documentation>
+      <documentation>Interface exposed by Azure SQL Server for external communication â€” speaks TDS (Tabular Data Stream), the wire protocol Microsoft SQL Server and its client drivers (sys-mssql-driver) use to exchange queries and results.</documentation>
       <properties>
         <property propertyDefinitionRef="propid-5">
           <value>Enabled</value>
@@ -153,7 +162,7 @@
     </element>
     <element identifier="id-30920e0c9a155dedb6c97d07fefde16e" xsi:type="SystemSoftware">
       <name>SQL Server Database Engine</name>
-      <documentation>Database engine behind Azure SQL Server (Microsoft.Sql/servers) — executes the queries app-init-demo-data/app-read-demo-items send through the SQL Server Interface.</documentation>
+      <documentation>Database engine behind Azure SQL Server (Microsoft.Sql/servers) â€” executes the queries app-init-demo-data/app-read-demo-items send through the SQL Server Interface.</documentation>
       <properties>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
@@ -162,7 +171,7 @@
     </element>
     <element identifier="id-3b81282895f35e30a238f6ed3dfeee13" xsi:type="SystemSoftware">
       <name>Static Web App Hosting Service</name>
-      <documentation>Azure Static Web App's own hosting service (Microsoft.Web/staticSites) — serves the Frontend's static files to the browser, and manages the Functions host's app settings (Database Config).</documentation>
+      <documentation>Azure Static Web App's own hosting service (Microsoft.Web/staticSites) â€” serves the Frontend's static files to the browser, and manages the Functions host's app settings (Database Config).</documentation>
       <properties>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
@@ -180,7 +189,7 @@
     </element>
     <element identifier="id-4c5fc1cbb2f4595abcc5c9849903200a" xsi:type="SystemSoftware">
       <name>mssql Driver (v11)</name>
-      <documentation>npm `mssql` package (api/package.json direct dependency) — the TDS client library getPool()/getItems() use to reach Azure SQL (see uml/structure/3-component.puml's "TDS (mssql)" interface).</documentation>
+      <documentation>npm `mssql` package (api/package.json direct dependency) â€” the TDS client library getPool()/getItems() use to reach Azure SQL (see uml/structure/3-component.puml's "TDS (mssql)" interface).</documentation>
       <properties>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
@@ -189,7 +198,7 @@
     </element>
     <element identifier="id-5855479862f65382bb40d6db9869be98" xsi:type="SystemSoftware">
       <name>Azure Functions Worker (v4)</name>
-      <documentation>npm `@azure/functions` package (api/package.json direct dependency, v4 programming model per host.json "version": "2.0") — provides the app.http() binding that routes incoming /api/items requests to the Items API handler (api/src/functions/items.ts).</documentation>
+      <documentation>npm `@azure/functions` package (api/package.json direct dependency, v4 programming model per host.json "version": "2.0") â€” provides the app.http() binding that routes incoming /api/items requests to the Items API handler (api/src/functions/items.ts).</documentation>
       <properties>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
@@ -225,7 +234,7 @@
     </element>
     <element identifier="id-32456a57134d5fa9b092f1354f77a34d" xsi:type="BusinessObject">
       <name>Demo Item</name>
-      <documentation>The business concept of an inventory item (Id, Name, Category) the Visitor views — the business-relevant counterpart of the stored demo items (do-demo-items).</documentation>
+      <documentation>The business concept of an inventory item (Id, Name, Category) the Visitor views â€” the business-relevant counterpart of the stored demo items (do-demo-items).</documentation>
       <properties>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
@@ -234,7 +243,7 @@
     </element>
     <element identifier="id-bd4055139c86568ba89ecceebd162acb" xsi:type="Representation">
       <name>Demo Items Table</name>
-      <documentation>The rendered &lt;table id="items"&gt; in public/index.html, populated by app.js's loadItems() — the perceptible form of Demo Item the Visitor actually reads.</documentation>
+      <documentation>The rendered &lt;table id="items"&gt; in public/index.html, populated by app.js's loadItems() â€” the perceptible form of Demo Item the Visitor actually reads.</documentation>
       <properties>
         <property propertyDefinitionRef="propid-2">
           <value>platform</value>
@@ -310,6 +319,10 @@
     </relationship>
     <relationship identifier="id-8f9df4896249567e91122c88fff2b1ef" source="id-454e7b903b83570699490736727db0f5" target="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Association"/>
     <relationship identifier="id-60fda6e7f09c570f9f9c080ff574c116" source="id-5deb57760c7b5ff782805afdf0a52709" target="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Association"/>
+    <relationship identifier="id-ab92817da73e5ee6b5d87f53281938ba" source="id-454e7b903b83570699490736727db0f5" target="id-9f19149e10f45ed6963d7945c81159bf" xsi:type="Association"/>
+    <relationship identifier="id-bb32e0bcac155d6c890c85ff193ec358" source="id-33cc192ee35e5bb1ac6766d16cace9ee" target="id-9f19149e10f45ed6963d7945c81159bf" xsi:type="Serving">
+      <name>public/ + /api/items over HTTPS</name>
+    </relationship>
     <relationship identifier="id-c1cdb1904b855424b77997b217f26b63" source="id-3b81282895f35e30a238f6ed3dfeee13" target="id-1ee4629338065d2fafc10f0f4fd6becc" xsi:type="Access" accessType="Write">
       <name>provisions app settings</name>
     </relationship>
@@ -359,6 +372,7 @@
       <label>Technology</label>
       <item identifierRef="id-3db5d26be8ff5636bce7ce69f352db3c"/>
       <item identifierRef="id-d447595fb73a5ff29894857ab28f8ffe"/>
+      <item identifierRef="id-9f19149e10f45ed6963d7945c81159bf"/>
       <item identifierRef="id-f0ecd6fb3b8b5bb69f24b39169314ce4"/>
       <item identifierRef="id-1ee4629338065d2fafc10f0f4fd6becc"/>
       <item identifierRef="id-5deb57760c7b5ff782805afdf0a52709"/>
@@ -413,6 +427,13 @@
             </font>
           </style>
         </node>
+        <node identifier="id-72a22fa6b3125b1ebad02684b7380158" elementRef="id-9f19149e10f45ed6963d7945c81159bf" xsi:type="Element" x="720" y="0" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
         <node identifier="id-b8c632864df355eea52ff0eb3b2ac7e0" elementRef="id-f0ecd6fb3b8b5bb69f24b39169314ce4" xsi:type="Element" x="0" y="480" w="100" h="80">
           <style>
             <font name="Arial" size="10">
@@ -427,28 +448,28 @@
             </font>
           </style>
         </node>
-        <node identifier="id-ab9206a422575a17b3a5d2ff7aaed1b7" elementRef="id-5deb57760c7b5ff782805afdf0a52709" xsi:type="Element" x="720" y="0" w="100" h="80">
+        <node identifier="id-ab9206a422575a17b3a5d2ff7aaed1b7" elementRef="id-5deb57760c7b5ff782805afdf0a52709" xsi:type="Element" x="960" y="0" w="100" h="80">
           <style>
             <font name="Arial" size="10">
               <color r="0" g="0" b="0"/>
             </font>
           </style>
         </node>
-        <node identifier="id-99705d40c3d7563b80a9530547642185" elementRef="id-454e7b903b83570699490736727db0f5" xsi:type="Element" x="960" y="0" w="100" h="80">
+        <node identifier="id-99705d40c3d7563b80a9530547642185" elementRef="id-454e7b903b83570699490736727db0f5" xsi:type="Element" x="1200" y="0" w="100" h="80">
           <style>
             <font name="Arial" size="10">
               <color r="0" g="0" b="0"/>
             </font>
           </style>
         </node>
-        <node identifier="id-757c722d0376526192f5b45c94a70c0c" elementRef="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Element" x="1200" y="0" w="100" h="70">
+        <node identifier="id-757c722d0376526192f5b45c94a70c0c" elementRef="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Element" x="1440" y="0" w="100" h="70">
           <style>
             <font name="Arial" size="9">
               <color r="0" g="0" b="0"/>
             </font>
           </style>
         </node>
-        <node identifier="id-da00fab5e1dd504e8f512bfb2b802ec5" elementRef="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Element" x="1440" y="0" w="100" h="70">
+        <node identifier="id-da00fab5e1dd504e8f512bfb2b802ec5" elementRef="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Element" x="1680" y="0" w="100" h="70">
           <style>
             <font name="Arial" size="9">
               <color r="0" g="0" b="0"/>
@@ -540,6 +561,20 @@
           </style>
         </connection>
         <connection identifier="id-1ffaa131add25d9db0782f2fd21aba0c" relationshipRef="id-60fda6e7f09c570f9f9c080ff574c116" xsi:type="Relationship" source="id-ab9206a422575a17b3a5d2ff7aaed1b7" target="id-757c722d0376526192f5b45c94a70c0c">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-8f7f735831f4542190682751b7fb92a8" relationshipRef="id-ab92817da73e5ee6b5d87f53281938ba" xsi:type="Relationship" source="id-99705d40c3d7563b80a9530547642185" target="id-72a22fa6b3125b1ebad02684b7380158">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-4be939416f8358ffa70c1fe6eb30ebef" relationshipRef="id-bb32e0bcac155d6c890c85ff193ec358" xsi:type="Relationship" source="id-da00fab5e1dd504e8f512bfb2b802ec5" target="id-72a22fa6b3125b1ebad02684b7380158">
           <style lineWidth="1">
             <font name="Segoe UI" size="9">
               <color r="0" g="0" b="0"/>
@@ -936,6 +971,13 @@
             </font>
           </style>
         </node>
+        <node identifier="id-cf601093f29757638587707231e2be36" elementRef="id-9f19149e10f45ed6963d7945c81159bf" xsi:type="Element" x="720" y="1200" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
         <node identifier="id-40e7f42bcd02580d89bedc58ff80f2ff" elementRef="id-f0ecd6fb3b8b5bb69f24b39169314ce4" xsi:type="Element" x="0" y="1680" w="100" h="80">
           <style>
             <font name="Arial" size="10">
@@ -950,14 +992,14 @@
             </font>
           </style>
         </node>
-        <node identifier="id-b1c2f318b4a55408b4104cbd2455e458" elementRef="id-5deb57760c7b5ff782805afdf0a52709" xsi:type="Element" x="720" y="1200" w="100" h="80">
+        <node identifier="id-b1c2f318b4a55408b4104cbd2455e458" elementRef="id-5deb57760c7b5ff782805afdf0a52709" xsi:type="Element" x="960" y="1200" w="100" h="80">
           <style>
             <font name="Arial" size="10">
               <color r="0" g="0" b="0"/>
             </font>
           </style>
         </node>
-        <node identifier="id-835bcd2f8b0d5b14a4b33f9de1827d73" elementRef="id-454e7b903b83570699490736727db0f5" xsi:type="Element" x="960" y="1200" w="100" h="80">
+        <node identifier="id-835bcd2f8b0d5b14a4b33f9de1827d73" elementRef="id-454e7b903b83570699490736727db0f5" xsi:type="Element" x="1200" y="1200" w="100" h="80">
           <style>
             <font name="Arial" size="10">
               <color r="0" g="0" b="0"/>
@@ -1006,14 +1048,14 @@
             </font>
           </style>
         </node>
-        <node identifier="id-35e896ffb1045e279d94077f71a81653" elementRef="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Element" x="1200" y="1200" w="100" h="70">
+        <node identifier="id-35e896ffb1045e279d94077f71a81653" elementRef="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Element" x="1440" y="1200" w="100" h="70">
           <style>
             <font name="Arial" size="9">
               <color r="0" g="0" b="0"/>
             </font>
           </style>
         </node>
-        <node identifier="id-df201d329fde59b0ac93658c17a735cb" elementRef="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Element" x="1440" y="1200" w="100" h="70">
+        <node identifier="id-df201d329fde59b0ac93658c17a735cb" elementRef="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Element" x="1680" y="1200" w="100" h="70">
           <style>
             <font name="Arial" size="9">
               <color r="0" g="0" b="0"/>
@@ -1293,6 +1335,20 @@
             </font>
           </style>
         </connection>
+        <connection identifier="id-5617988cb2255e0189816f13ce0e42d3" relationshipRef="id-ab92817da73e5ee6b5d87f53281938ba" xsi:type="Relationship" source="id-835bcd2f8b0d5b14a4b33f9de1827d73" target="id-cf601093f29757638587707231e2be36">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-3c02f3ec7d55528fa56650ec9aa9e309" relationshipRef="id-bb32e0bcac155d6c890c85ff193ec358" xsi:type="Relationship" source="id-df201d329fde59b0ac93658c17a735cb" target="id-cf601093f29757638587707231e2be36">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
         <connection identifier="id-c4f94fb7f8b1596db27b3c8c14fae7dc" relationshipRef="id-c1cdb1904b855424b77997b217f26b63" xsi:type="Relationship" source="id-31b44f773fa651a8be802e44955a9bf0" target="id-88186512bc6d540ba70d7711da21d671">
           <style lineWidth="1">
             <font name="Segoe UI" size="9">
@@ -1481,6 +1537,13 @@
             </font>
           </style>
         </node>
+        <node identifier="id-bd215cdb2a565ce4bceef07f02340aa5" elementRef="id-9f19149e10f45ed6963d7945c81159bf" xsi:type="Element" x="720" y="480" w="100" h="80">
+          <style>
+            <font name="Arial" size="10">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </node>
         <node identifier="id-eb6d7dd3b8845eb4b56843ae6634d43f" elementRef="id-f0ecd6fb3b8b5bb69f24b39169314ce4" xsi:type="Element" x="0" y="960" w="100" h="80">
           <style>
             <font name="Arial" size="10">
@@ -1495,14 +1558,14 @@
             </font>
           </style>
         </node>
-        <node identifier="id-0cc5b0687f56531399b9f9eff7b1b54c" elementRef="id-5deb57760c7b5ff782805afdf0a52709" xsi:type="Element" x="720" y="480" w="100" h="80">
+        <node identifier="id-0cc5b0687f56531399b9f9eff7b1b54c" elementRef="id-5deb57760c7b5ff782805afdf0a52709" xsi:type="Element" x="960" y="480" w="100" h="80">
           <style>
             <font name="Arial" size="10">
               <color r="0" g="0" b="0"/>
             </font>
           </style>
         </node>
-        <node identifier="id-70b310e89e785cf7b254d62be4dc90a3" elementRef="id-454e7b903b83570699490736727db0f5" xsi:type="Element" x="960" y="480" w="100" h="80">
+        <node identifier="id-70b310e89e785cf7b254d62be4dc90a3" elementRef="id-454e7b903b83570699490736727db0f5" xsi:type="Element" x="1200" y="480" w="100" h="80">
           <style>
             <font name="Arial" size="10">
               <color r="0" g="0" b="0"/>
@@ -1537,14 +1600,14 @@
             </font>
           </style>
         </node>
-        <node identifier="id-e355e4595abf50658ece3ba4ba398ac7" elementRef="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Element" x="1200" y="480" w="100" h="70">
+        <node identifier="id-e355e4595abf50658ece3ba4ba398ac7" elementRef="id-76a7034dd9ab5366a50d57edc1dced70" xsi:type="Element" x="1440" y="480" w="100" h="70">
           <style>
             <font name="Arial" size="9">
               <color r="0" g="0" b="0"/>
             </font>
           </style>
         </node>
-        <node identifier="id-d7107d7f71a053778e353e0aec2e4929" elementRef="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Element" x="1440" y="480" w="100" h="70">
+        <node identifier="id-d7107d7f71a053778e353e0aec2e4929" elementRef="id-33cc192ee35e5bb1ac6766d16cace9ee" xsi:type="Element" x="1680" y="480" w="100" h="70">
           <style>
             <font name="Arial" size="9">
               <color r="0" g="0" b="0"/>
@@ -1678,6 +1741,20 @@
           </style>
         </connection>
         <connection identifier="id-8ba5451b0aad598ebd577c8b6b6f7fa5" relationshipRef="id-60fda6e7f09c570f9f9c080ff574c116" xsi:type="Relationship" source="id-0cc5b0687f56531399b9f9eff7b1b54c" target="id-e355e4595abf50658ece3ba4ba398ac7">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-be6d532977a75bd8bb3f7fcb1153b7f7" relationshipRef="id-ab92817da73e5ee6b5d87f53281938ba" xsi:type="Relationship" source="id-70b310e89e785cf7b254d62be4dc90a3" target="id-bd215cdb2a565ce4bceef07f02340aa5">
+          <style lineWidth="1">
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0"/>
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-2c7309ba3bd851bfb449b4130ccef6c2" relationshipRef="id-bb32e0bcac155d6c890c85ff193ec358" xsi:type="Relationship" source="id-d7107d7f71a053778e353e0aec2e4929" target="id-bd215cdb2a565ce4bceef07f02340aa5">
           <style lineWidth="1">
             <font name="Segoe UI" size="9">
               <color r="0" g="0" b="0"/>

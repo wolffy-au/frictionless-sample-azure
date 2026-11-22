@@ -28,6 +28,15 @@
     Azure SQL Server (Microsoft.Sql/servers) — logical server hosting the
     appdb database and the Database Engine that executes its queries.
 
+- type: Node
+  id: node-visitor-browser
+  name: Visitor's Browser
+  desc: >-
+    The Visitor's web browser and the machine it runs on — where the
+    Frontend executes. Runs no third-party technology: it loads public/ and
+    calls /api/items, and all server-side technology is in the Static Web
+    App node.
+
 - type: Artifact
   id: artifact-sql-appdb
   name: appdb
