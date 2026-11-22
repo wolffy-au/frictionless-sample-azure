@@ -1,0 +1,45 @@
+# Deploys sample-azure when a version tag (v*) is pushed, by running deploy.sh.
+# One-time setup (identity, permissions, GitHub settings): setup-github-deploy.sh.
+name: Deploy
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+  id-token: write # sign in to the cloud with GitHub's OIDC token, no stored keys
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Check out the tagged commit
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # git describe needs the history and tags
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: Sign in to Azure
+        uses: azure/login@v3
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy
+        run: bash deploy.sh
+        env:
+          RESOURCE_GROUP: ${{ vars.RESOURCE_GROUP }}
+          LOCATION: ${{ vars.LOCATION }}
+          DB_ADMIN_PASSWORD: ${{ secrets.DB_ADMIN_PASSWORD }}

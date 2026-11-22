@@ -15,6 +15,8 @@ Azure counterpart of
 | `api/` | TypeScript Azure Functions API (`src/functions/items.ts`) |
 | `public/` | Static frontend (`index.html`, `app.js`) |
 | `deploy.sh` | Provisions the infrastructure, builds the API and publishes the app |
+| `.github/workflows/deploy.yml` | GitHub Actions: runs `deploy.sh` when a version tag is pushed |
+| `setup-github-deploy.sh` | One-time setup of the keyless sign-in and settings the workflow uses |
 
 ## Prerequisites
 
@@ -47,6 +49,33 @@ RESOURCE_GROUP=my-rg LOCATION=eastus2 bash deploy.sh
 
 Never commit the SQL password. `.env` is git-ignored if you want to keep local
 settings there.
+
+## Deploy from GitHub Actions
+
+Pushing a version tag deploys automatically:
+
+```bash
+git tag v1.2.3
+git push origin v1.2.3
+```
+
+The workflow (`.github/workflows/deploy.yml`) runs `deploy.sh` in the
+repository's `production` environment. It signs in to Azure through a federated
+credential (OpenID Connect), so no Azure secret or key is stored in GitHub.
+
+Set this up once, with `az` and the [GitHub CLI](https://cli.github.com)
+(`gh`) both signed in and `DB_ADMIN_PASSWORD` set in `.env` (or entered when
+prompted):
+
+```bash
+bash setup-github-deploy.sh
+```
+
+It creates a `github-deploy-frictionless-sample-azure` app registration whose
+federated credential trusts only this repository's `production` environment.
+It grants the app the Contributor role on the resource group, and stores the
+settings as variables in the `production` environment. The SQL password is
+stored there as the `DB_ADMIN_PASSWORD` secret. It is safe to re-run.
 
 ## Build version
 
