@@ -25,6 +25,9 @@ function getPool(): Promise<sql.ConnectionPool> {
       database,
       user,
       password,
+      // Long enough for most of a serverless resume, but under the ~45 s
+      // Static Web Apps limit on managed Functions requests.
+      connectionTimeout: 30000,
       options: {
         encrypt: true,
         trustServerCertificate: false,
@@ -84,6 +87,38 @@ async function getItems(): Promise<DemoItem[]> {
   return result.recordset as DemoItem[];
 }
 
+// True when the error means the serverless database is resuming from
+// auto-pause, so the request is worth retrying shortly.
+function isDatabaseWakingUp(error: unknown): boolean {
+  if (!(error instanceof Error)) {
+    return false;
+  }
+
+  const { code, number, originalError } = error as Error & {
+    code?: string;
+    number?: number;
+    originalError?: { number?: number };
+  };
+
+  // 40613 "Database ... is not currently available" raised by a query.
+  if (number === 40613 || originalError?.number === 40613) {
+    return true;
+  }
+
+  // Timeouts and socket errors from a query are not about waking up.
+  if (error instanceof sql.RequestError) {
+    return false;
+  }
+
+  // While connecting, tedious reports 40613 as ELOGIN with the server's
+  // message but without the error number.
+  return (
+    code === "ETIMEOUT" ||
+    code === "ESOCKET" ||
+    (code === "ELOGIN" && error.message.includes("is not currently available"))
+  );
+}
+
 async function handleItems(
   _request: HttpRequest,
   context: InvocationContext,
@@ -93,6 +128,15 @@ async function handleItems(
       jsonBody: await getItems(),
     };
   } catch (error) {
+    if (isDatabaseWakingUp(error)) {
+      context.warn("Azure SQL is resuming from auto-pause; asking the client to retry.", error);
+      return {
+        status: 503,
+        headers: { "Retry-After": "10" },
+        jsonBody: { error: "The database is waking up. Retrying...", retryable: true },
+      };
+    }
+
     context.error("Unable to load demo items from Azure SQL.", error);
     return {
       status: 500,
