@@ -3,7 +3,9 @@
 A minimal, low-cost Azure sample: a Free Azure Static Web App, an Azure SQL
 free-tier database, and a TypeScript Functions API, deployed with a single
 script. The page calls `/api/items`; on its first request, the API creates
-`dbo.DemoItems` and inserts three sample rows if the table is empty.
+`dbo.DemoItems` and inserts three sample rows if the table is empty. It is the
+Azure counterpart of
+[frictionless-sample-gcp](https://github.com/wolffy-au/frictionless-sample-gcp).
 
 ## Project layout
 
