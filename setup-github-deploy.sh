@@ -39,7 +39,17 @@ fi
 
 REPO=$(gh repo view --json nameWithOwner --jq .nameWithOwner)
 ENVIRONMENT=production
-SUBJECT="repo:$REPO:environment:$ENVIRONMENT"
+# The subject GitHub puts in this repository's OIDC tokens. Ask GitHub for its
+# prefix rather than assume repo:<owner>/<repo>: repositories can use the
+# immutable form repo:<owner>@<owner-id>/<repo>@<repo-id>.
+IFS=$'\t' read -r USE_DEFAULT_SUBJECT SUBJECT_PREFIX < <(
+  gh api "repos/$REPO/actions/oidc/customization/sub" \
+    --jq '[.use_default, (.sub_claim_prefix // "")] | @tsv')
+if [[ "$USE_DEFAULT_SUBJECT" != "true" ]]; then
+  echo "$REPO uses a customized OIDC subject claim, which this script does not support." >&2
+  exit 1
+fi
+SUBJECT="${SUBJECT_PREFIX:-repo:$REPO}:environment:$ENVIRONMENT"
 
 APP_NAME="github-deploy-${REPO#*/}"
 SUBSCRIPTION_ID=$(az account show --query id --output tsv)
@@ -60,14 +70,20 @@ fi
 PRINCIPAL_ID=$(az ad sp show --id "$CLIENT_ID" --query id --output tsv)
 
 echo "Letting $SUBJECT sign in as the app..."
-if [[ -z "$(az ad app federated-credential list --id "$CLIENT_ID" \
-  --query "[?subject=='$SUBJECT'].name" --output tsv)" ]]; then
-  az ad app federated-credential create --id "$CLIENT_ID" --output none --parameters "{
-    \"name\": \"github-$ENVIRONMENT\",
-    \"issuer\": \"https://token.actions.githubusercontent.com\",
-    \"subject\": \"$SUBJECT\",
-    \"audiences\": [\"api://AzureADTokenExchange\"]
-  }"
+CREDENTIAL_NAME="github-$ENVIRONMENT"
+CREDENTIAL="{
+  \"name\": \"$CREDENTIAL_NAME\",
+  \"issuer\": \"https://token.actions.githubusercontent.com\",
+  \"subject\": \"$SUBJECT\",
+  \"audiences\": [\"api://AzureADTokenExchange\"]
+}"
+if [[ -n "$(az ad app federated-credential list --id "$CLIENT_ID" \
+  --query "[?name=='$CREDENTIAL_NAME'].name" --output tsv)" ]]; then
+  az ad app federated-credential update --id "$CLIENT_ID" \
+    --federated-credential-id "$CREDENTIAL_NAME" --parameters "$CREDENTIAL" --output none
+else
+  az ad app federated-credential create --id "$CLIENT_ID" \
+    --parameters "$CREDENTIAL" --output none
 fi
 
 echo "Granting the app the role deploy.sh needs..."
