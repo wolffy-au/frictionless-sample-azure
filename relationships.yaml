@@ -40,7 +40,8 @@
 
 - {type: Assignment, source: app-items-api, target: app-init-demo-data}
 - {type: Assignment, source: app-items-api, target: app-read-demo-items}
-- {type: Triggering, source: app-init-demo-data, target: app-read-demo-items}
+- {type: Triggering, source: app-read-demo-items, target: app-init-demo-data, label: "if empty"}
+- {type: Triggering, source: app-init-demo-data, target: app-read-demo-items, label: "re-read"}
 
 - type: Access
   source: app-init-demo-data

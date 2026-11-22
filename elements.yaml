@@ -111,14 +111,14 @@
     inserts the three seed items if it is empty, guarded so concurrent first
     loads seed only once.
   props:
-    implementation: "getItems(): sp_getapplock, CREATE TABLE dbo.DemoItems if missing, INSERT 3 seed rows if empty"
+    implementation: "initItems(): sp_getapplock, CREATE TABLE dbo.DemoItems if missing, INSERT 3 seed rows if empty"
 
 - type: ApplicationProcess
   id: app-read-demo-items
   name: Read Demo Items
   desc: Reads all demo items ordered by Id, on every page load.
   props:
-    implementation: "getItems(): SELECT Id, Name, Category FROM dbo.DemoItems ORDER BY Id"
+    implementation: "readItems(): SELECT Id, Name, Category FROM dbo.DemoItems ORDER BY Id, if the table exists"
 
 - type: DataObject
   id: do-demo-items
