@@ -35,7 +35,8 @@ bash deploy.sh
 The script prompts for the SQL administrator password unless `DB_ADMIN_PASSWORD`
 is set in the environment. It deploys the Bicep resources, builds the API, obtains
 the Static Web App deployment token using Azure CLI, then uses `npx` to publish
-`public/` and `api/` with the Node.js 20 Functions runtime.
+`public/` and `api/` with the Node.js 22 Functions runtime, the newest that
+the Static Web Apps CLI accepts for managed Functions.
 
 The resource group and region default to `MyRG-centralus` and `centralus`.
 Override them with environment variables:
