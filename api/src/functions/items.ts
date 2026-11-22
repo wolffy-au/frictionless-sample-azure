@@ -43,9 +43,23 @@ function getPool(): Promise<sql.ConnectionPool> {
   return poolPromise;
 }
 
-async function getItems(): Promise<DemoItem[]> {
-  const pool = await getPool();
+// Cheap read with no transaction or lock. Returns an empty array when the
+// table doesn't exist yet (the batch then returns no recordset) or is empty.
+async function readItems(pool: sql.ConnectionPool): Promise<DemoItem[]> {
   const result = await pool.request().batch(`
+    IF OBJECT_ID(N'dbo.DemoItems', N'U') IS NOT NULL
+      SELECT Id, Name, Category
+      FROM dbo.DemoItems
+      ORDER BY Id;
+  `);
+
+  return (result.recordset ?? []) as DemoItem[];
+}
+
+// First-use setup: creates and seeds dbo.DemoItems under an application lock,
+// so concurrent first requests seed it exactly once.
+async function initItems(pool: sql.ConnectionPool): Promise<void> {
+  await pool.request().batch(`
     SET XACT_ABORT ON;
     BEGIN TRANSACTION;
 
@@ -78,13 +92,19 @@ async function getItems(): Promise<DemoItem[]> {
     END;
 
     COMMIT TRANSACTION;
-
-    SELECT Id, Name, Category
-    FROM dbo.DemoItems
-    ORDER BY Id;
   `);
+}
 
-  return result.recordset as DemoItem[];
+async function getItems(): Promise<DemoItem[]> {
+  const pool = await getPool();
+  let items = await readItems(pool);
+
+  if (items.length === 0) {
+    await initItems(pool);
+    items = await readItems(pool);
+  }
+
+  return items;
 }
 
 // True when the error means the serverless database is resuming from
